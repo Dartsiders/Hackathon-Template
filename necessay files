@@ -1,0 +1,10 @@
+flutter pub run build_runner watch --delete-conflicting-outputs
+
+flutter pub run flutter_native_splash:create
+
+pub global run rename --bundleId com.onatcipli.networkUpp
+pub global run rename --appname "Network Upp"
+
+
+flutter pub get
+flutter pub run flutter_launcher_icons:main
