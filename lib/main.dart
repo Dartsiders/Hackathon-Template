@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:hackathontemplate/feature/init/view_model/init_view_model.dart';
+import 'feature/init/view_model/init_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'core/locator/locator.dart';
 import 'core/routes/routes.dart';

@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:hackathontemplate/core/services/database/firebase_database_service.dart';
-import 'package:hackathontemplate/feature/init/view_model/init_view_model.dart';
+import '../services/database/firebase_database_service.dart';
+import '../../feature/init/view_model/init_view_model.dart';
 
 import '../../feature/home/view_model/home_view_model.dart';
 

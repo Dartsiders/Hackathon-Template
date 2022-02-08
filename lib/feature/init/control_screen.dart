@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hackathontemplate/feature/init/view_model/init_view_model.dart';
+import 'view_model/init_view_model.dart';
 
 import '../../core/locator/locator.dart';
 

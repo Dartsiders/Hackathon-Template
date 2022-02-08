@@ -1,5 +1,5 @@
 
-import 'package:hackathontemplate/core/models/user_model/user_model.dart';
+import '../../models/user_model/user_model.dart';
 
 import 'database_service.dart';
 

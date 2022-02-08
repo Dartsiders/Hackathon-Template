@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hackathontemplate/feature/init/control_screen.dart';
+import '../../feature/init/control_screen.dart';
 
 import '../../feature/home/screens/home_screen.dart';
 
