@@ -59,6 +59,11 @@ linked_*.ds
 unlinked.ds
 unlinked_spec.ds
 
+# Firebase related
+.firebase/
+lib/firebase_options.dart
+lib/generated_plugin_registrant.dart
+
 # Android related
 **/android/**/gradle-wrapper.jar
 .gradle/
@@ -69,6 +74,7 @@ unlinked_spec.ds
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
+**/android/app/google-services.json
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -99,6 +105,7 @@ unlinked_spec.ds
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/Runner/GoogleService-Info.plist
 
 # macOS
 **/macos/Flutter/GeneratedPluginRegistrant.swift
