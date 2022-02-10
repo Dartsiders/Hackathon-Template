@@ -20,7 +20,6 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-///bu bir deneme yorumudur
 
 class _MyAppState extends State<MyApp> {
   final InitViewModel _initViewModel = locator<InitViewModel>();
