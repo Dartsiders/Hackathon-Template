@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
         theme: _initViewModel.appTheme,
         debugShowCheckedModeBanner: false,
         title: "Hackathon Template",
-        initialRoute: Routes.home,
+        initialRoute: Routes.init,
         routes: Routes.routes,
       );
     });

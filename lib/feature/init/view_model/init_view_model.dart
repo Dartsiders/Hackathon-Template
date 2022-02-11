@@ -6,8 +6,11 @@ import 'package:mobx/mobx.dart';
 import '../../../core/app/theme/app_theme.dart';
 import '../../../core/enum/view_state_enum.dart';
 import '../../../core/locator/locator.dart';
+import '../../../core/models/user_model/user_model.dart';
 import '../../../core/services/database/firebase_database_service.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../../core/services/sign/firebase_sign_service.dart';
 
 part 'init_view_model.g.dart';
 
@@ -16,6 +19,9 @@ class InitViewModel = _InitViewModelBase with _$InitViewModel;
 abstract class _InitViewModelBase with Store {
   final FirebaseDatabaseService _firebaseDatabaseService =
       locator<FirebaseDatabaseService>();
+
+  final FirebaseSignService _firebaseSignService =
+      locator<FirebaseSignService>();
 
   @observable
   bool? isLocationEnabled;
@@ -39,16 +45,12 @@ abstract class _InitViewModelBase with Store {
   ViewState viewState = ViewState.idle;
 
   @action
-  Future<void /*Position*/ > setLocationPermission() async {
+  Future<void> setLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // Location services are not enabled don't continue
-      // accessing the position and request users of the
-      // App to enable the location services.
       isLocationEnabled = false;
     }
 
@@ -56,17 +58,11 @@ abstract class _InitViewModelBase with Store {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
         isLocationEnabled = false;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
       isLocationEnabled = false;
     }
 
@@ -74,10 +70,27 @@ abstract class _InitViewModelBase with Store {
         permission == LocationPermission.always) {
       isLocationEnabled = true;
     }
+  }
 
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    // return await Geolocator.getCurrentPosition();
-    //isLocationEnabled = true;
+  @observable
+  UserModel userModel = UserModel();
+
+  @action
+  Future<bool> currentUser() async {
+    try {
+      bool isUserExist = await _firebaseSignService.currentUser();
+      String? uId = _firebaseSignService.uId;
+      if (isUserExist) {
+        userModel =
+            await _firebaseDatabaseService.userReadDatabase(uId);
+        //_mainViewModel.userModel = userModel;
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print("UserAuthenticationViewModel currentUser hata yakaladı $e");
+      return false;
+    }
   }
 }
