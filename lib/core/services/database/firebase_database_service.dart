@@ -1,6 +1,9 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hackathontemplate/core/models/emergency/emergency_model.dart';
+import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
+import 'package:hackathontemplate/core/services/storage/firebase_storage_service.dart';
 
+import '../../locator/locator.dart';
 import '../../models/user_model/user_model.dart';
 
 import 'database_service.dart';
@@ -8,7 +11,7 @@ import 'database_service.dart';
 class FirebaseDatabaseService implements DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
- @override
+  @override
   Future<UserModel> userReadDatabase(String? userId) async {
     final UserModel _usrModel = await _firebaseFirestore
         .collection("users")
@@ -20,8 +23,7 @@ class FirebaseDatabaseService implements DatabaseService {
     return _usrModel;
   }
 
-
-   @override
+  @override
   Future<bool> userSaveDatabase(UserModel userModel) async {
     final documentRef =
         _firebaseFirestore.collection("users").doc(userModel.userId);
@@ -31,7 +33,7 @@ class FirebaseDatabaseService implements DatabaseService {
 
   @override
   Future<bool> userControlDatabase(String? userId) async {
-    return  _firebaseFirestore
+    return _firebaseFirestore
         .collection("users")
         .doc(userId)
         .get()
@@ -46,6 +48,20 @@ class FirebaseDatabaseService implements DatabaseService {
     });
   }
 
+  Future<void> addEmergencyContacts(
+      EmergencyContactModel emergencyContactModel) async {
+    await _firebaseFirestore
+        .collection("users")
+        .doc("userId")
+        .collection("emergencyContacts")
+        .doc("emergencyContactId")
+        .set(emergencyContactModel.toJson());
+  }
 
-
+  Future<void> addEmergency(EmergencyModel emergencyModel) async {
+    await _firebaseFirestore
+        .collection("emergency")
+        .doc()
+        .set(emergencyModel.toJson());
+  }
 }

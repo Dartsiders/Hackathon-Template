@@ -24,10 +24,26 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
+  final _$userModelAtom = Atom(name: '_HomeViewModelBase.userModel');
+
+  @override
+  UserModel? get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel? value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
-viewState: ${viewState}
+viewState: ${viewState},
+userModel: ${userModel}
     ''';
   }
 }

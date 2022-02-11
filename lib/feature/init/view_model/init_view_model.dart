@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/app/theme/app_theme.dart';
@@ -22,6 +23,8 @@ abstract class _InitViewModelBase with Store {
 
   final FirebaseSignService _firebaseSignService =
       locator<FirebaseSignService>();
+
+  final HomeViewModel _homeViewModel = locator<HomeViewModel>();
 
   @observable
   bool? isLocationEnabled;
@@ -81,9 +84,8 @@ abstract class _InitViewModelBase with Store {
       bool isUserExist = await _firebaseSignService.currentUser();
       String? uId = _firebaseSignService.uId;
       if (isUserExist) {
-        userModel =
-            await _firebaseDatabaseService.userReadDatabase(uId);
-        //_mainViewModel.userModel = userModel;
+        userModel = await _firebaseDatabaseService.userReadDatabase(uId);
+        _homeViewModel.userModel = userModel;
         return true;
       } else {
         return false;
