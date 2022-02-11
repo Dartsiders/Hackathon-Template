@@ -12,12 +12,12 @@ class AppTheme {
   final InitViewModel _initViewModel = locator<InitViewModel>();
 
   static ThemeData get themeDark => FlexThemeData.dark(
-        scheme: FlexScheme.blueWhale,
+        scheme: FlexScheme.hippieBlue,
         textTheme: AppTextTheme.textTheme,
       );
       
   static ThemeData get themeLight => FlexThemeData.light(
-        scheme: FlexScheme.blueWhale,
+        scheme: FlexScheme.hippieBlue,
         textTheme: AppTextTheme.textTheme,
       );
 
