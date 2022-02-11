@@ -7,6 +7,7 @@ import 'package:mobx/mobx.dart';
 import '../../../core/enum/view_state_enum.dart';
 import '../../../core/locator/locator.dart';
 import '../../../core/models/user_model/user_model.dart';
+import '../../home/view_model/home_view_model.dart';
 
 part 'auth_view_model.g.dart';
 
@@ -16,11 +17,10 @@ abstract class _AuthViewModelBase with Store {
   final FirebaseDatabaseService _firebaseDatabaseService =
       locator<FirebaseDatabaseService>();
 
-  final FirebaseSignService _firebaseSignService =
-      locator<FirebaseSignService>();
-
   final FirebaseSocialService _firebaseSocialService =
       locator<FirebaseSocialService>();
+
+  final HomeViewModel _homeViewModel = locator<HomeViewModel>();
 
   @observable
   UserModel userModel = UserModel();
@@ -40,6 +40,7 @@ abstract class _AuthViewModelBase with Store {
       await userModelSaveAndReadWithTests(userModel);
 
       if (userModel.userId != null) {
+        _homeViewModel.userModel = userModel;
         Navigator.of(context).pushNamed("/home");
       }
 
