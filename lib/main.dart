@@ -7,7 +7,7 @@ import 'core/routes/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
+//bu bir denemedir -ahmet
   setupLocator();
 
   runApp(const MyApp());
