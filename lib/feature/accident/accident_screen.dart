@@ -31,7 +31,7 @@ class _AccidentScreenState extends State<AccidentScreen> {
           children: [
             Container(
               color: AppColor.greenColor,
-              height: 200,
+              height: 250,
               child: const Center(
                 child: Text('Accident'),
               ),
