@@ -85,6 +85,21 @@ mixin _$InitViewModel on _InitViewModelBase, Store {
     });
   }
 
+  final _$userModelAtom = Atom(name: '_InitViewModelBase.userModel');
+
+  @override
+  UserModel get userModel {
+    _$userModelAtom.reportRead();
+    return super.userModel;
+  }
+
+  @override
+  set userModel(UserModel value) {
+    _$userModelAtom.reportWrite(value, super.userModel, () {
+      super.userModel = value;
+    });
+  }
+
   final _$setLocationPermissionAsyncAction =
       AsyncAction('_InitViewModelBase.setLocationPermission');
 
@@ -94,6 +109,14 @@ mixin _$InitViewModel on _InitViewModelBase, Store {
         .run(() => super.setLocationPermission());
   }
 
+  final _$currentUserAsyncAction =
+      AsyncAction('_InitViewModelBase.currentUser');
+
+  @override
+  Future<bool> currentUser() {
+    return _$currentUserAsyncAction.run(() => super.currentUser());
+  }
+
   @override
   String toString() {
     return '''
@@ -101,6 +124,7 @@ isLocationEnabled: ${isLocationEnabled},
 isDarkModel: ${isDarkModel},
 isENLocal: ${isENLocal},
 viewState: ${viewState},
+userModel: ${userModel},
 appTheme: ${appTheme},
 locale: ${locale}
     ''';

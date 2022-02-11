@@ -42,6 +42,7 @@ dependencies:
   loading_overlay: ^0.3.0
   # Test
   rename: ^2.0.1
+  google_sign_in: ^5.2.3
 
 dev_dependencies:
   flutter_test:
