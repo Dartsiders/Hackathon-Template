@@ -1,15 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'feature/init/view_model/init_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'core/locator/locator.dart';
 import 'core/routes/routes.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//bu bir denemedir -ahmet
   setupLocator();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -19,7 +22,6 @@ class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
 }
-
 
 class _MyAppState extends State<MyApp> {
   final InitViewModel _initViewModel = locator<InitViewModel>();

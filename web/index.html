@@ -38,6 +38,22 @@
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCvffkdZV3JGnQuXyfYMvyexnE7PRo0Mik",
+      authDomain: "dartsiders-e270f.firebaseapp.com",
+      projectId: "dartsiders-e270f",
+      storageBucket: "dartsiders-e270f.appspot.com",
+      messagingSenderId: "934254993849",
+      appId: "1:934254993849:web:756b6a4f13657c582bd668",
+      measurementId: "G-1ZGRGJZRVQ"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;

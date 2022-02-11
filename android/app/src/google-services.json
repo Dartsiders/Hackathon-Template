@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "934254993849",
+    "project_id": "dartsiders-e270f",
+    "storage_bucket": "dartsiders-e270f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934254993849:android:e070b731faac42e52bd668",
+        "android_client_info": {
+          "package_name": "com.example.hackathontemplate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934254993849-b49bckj1du3dptq1eobssno70respats.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUSK5mIktnaebNICRYiQ1WsgKz0HPp0Uo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934254993849-b49bckj1du3dptq1eobssno70respats.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934254993849-8v25sa0564fllk8alpkqrrobqblp3t2s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hackathontemplate"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
