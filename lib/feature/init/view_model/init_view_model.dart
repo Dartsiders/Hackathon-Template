@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mobx/mobx.dart';
 
@@ -7,7 +8,6 @@ import '../../../core/app/theme/app_theme.dart';
 import '../../../core/enum/view_state_enum.dart';
 import '../../../core/locator/locator.dart';
 import '../../../core/services/database/firebase_database_service.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 part 'init_view_model.g.dart';
 
@@ -74,10 +74,5 @@ abstract class _InitViewModelBase with Store {
         permission == LocationPermission.always) {
       isLocationEnabled = true;
     }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-    // return await Geolocator.getCurrentPosition();
-    //isLocationEnabled = true;
   }
 }

@@ -28,18 +28,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: _initViewModel.locale,
-        theme: _initViewModel.appTheme,
-        debugShowCheckedModeBanner: false,
-        title: "Hackathon Template",
-        initialRoute: Routes.home,
-        routes: Routes.routes,
-      );
-    });
+    return Observer(
+      builder: (_) {
+        return MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: _initViewModel.locale,
+          theme: _initViewModel.appTheme,
+          debugShowCheckedModeBanner: false,
+          title: "Hackathon Template",
+          initialRoute: Routes.accident,
+          routes: Routes.routes,
+        );
+      },
+    );
   }
 }
 

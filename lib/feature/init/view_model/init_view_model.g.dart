@@ -12,16 +12,18 @@ mixin _$InitViewModel on _InitViewModelBase, Store {
   Computed<ThemeData>? _$appThemeComputed;
 
   @override
-  ThemeData get appTheme =>
-      (_$appThemeComputed ??= Computed<ThemeData>(() => super.appTheme,
-              name: '_InitViewModelBase.appTheme'))
+  ThemeData get appTheme => (_$appThemeComputed ??= Computed<ThemeData>(
+        () => super.appTheme,
+        name: '_InitViewModelBase.appTheme',
+      ))
           .value;
   Computed<Locale>? _$localeComputed;
 
   @override
-  Locale get locale =>
-      (_$localeComputed ??= Computed<Locale>(() => super.locale,
-              name: '_InitViewModelBase.locale'))
+  Locale get locale => (_$localeComputed ??= Computed<Locale>(
+        () => super.locale,
+        name: '_InitViewModelBase.locale',
+      ))
           .value;
 
   final _$isLocationEnabledAtom =
