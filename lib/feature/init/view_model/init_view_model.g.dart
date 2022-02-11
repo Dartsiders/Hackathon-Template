@@ -24,6 +24,22 @@ mixin _$InitViewModel on _InitViewModelBase, Store {
               name: '_InitViewModelBase.locale'))
           .value;
 
+  final _$isLocationEnabledAtom =
+      Atom(name: '_InitViewModelBase.isLocationEnabled');
+
+  @override
+  bool? get isLocationEnabled {
+    _$isLocationEnabledAtom.reportRead();
+    return super.isLocationEnabled;
+  }
+
+  @override
+  set isLocationEnabled(bool? value) {
+    _$isLocationEnabledAtom.reportWrite(value, super.isLocationEnabled, () {
+      super.isLocationEnabled = value;
+    });
+  }
+
   final _$isDarkModelAtom = Atom(name: '_InitViewModelBase.isDarkModel');
 
   @override
@@ -69,9 +85,19 @@ mixin _$InitViewModel on _InitViewModelBase, Store {
     });
   }
 
+  final _$setLocationPermissionAsyncAction =
+      AsyncAction('_InitViewModelBase.setLocationPermission');
+
+  @override
+  Future<void> setLocationPermission() {
+    return _$setLocationPermissionAsyncAction
+        .run(() => super.setLocationPermission());
+  }
+
   @override
   String toString() {
     return '''
+isLocationEnabled: ${isLocationEnabled},
 isDarkModel: ${isDarkModel},
 isENLocal: ${isENLocal},
 viewState: ${viewState},
