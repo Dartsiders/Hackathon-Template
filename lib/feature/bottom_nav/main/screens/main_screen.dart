@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:group_button/group_button.dart';
@@ -20,34 +21,34 @@ class MainScreen extends StatelessWidget {
     return Observer(
       builder: (_) {
         return Scaffold(
-            //status bar renk değiştirmiyo sor
-            body: Container(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: headerTopProfile(),
-              ),
-              Expanded(
-                flex: 2,
-                child: headerCenterSpeed(),
-              ),
-              Expanded(
-                flex: 2,
-                child: headerBottomButtons(),
-              ),
-              Expanded(
-                flex: 2,
-                child: bodyTopContacts(_homeViewModel),
-              ),
-              Expanded(
-                flex: 2,
-                child: bodyBottomEducations(_homeViewModel),
-              )
-            ],
+          //status bar renk değiştirmiyo sor
+          body: Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: headerTopProfile(),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: headerCenterSpeed(),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: headerBottomButtons(),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: bodyTopContacts(_homeViewModel),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: bodyBottomEducations(_homeViewModel),
+                )
+              ],
+            ),
           ),
-        ));
+        );
       },
     );
   }
@@ -68,26 +69,18 @@ class MainScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Kullanıcı İsmi', style: AppTheme.textStyle.headline6),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text('Günaydın', style: AppTheme.textStyle.caption),
             ],
           ),
           AppSize.highWidthSizedBox,
+
           CircleAvatar(
             radius: 24,
             backgroundColor: AppTheme.theme.dividerColor.withOpacity(0.04),
             child: IconButton(
               color: Colors.black.withOpacity(0.7),
-              icon: Icon(Icons.filter_alt_outlined),
-              onPressed: () {},
-            ),
-          ),
-          CircleAvatar(
-            radius: 24,
-            backgroundColor: AppTheme.theme.dividerColor.withOpacity(0.04),
-            child: IconButton(
-              color: Colors.black.withOpacity(0.7),
-              icon: Icon(Icons.notifications_outlined),
+              icon: const Icon(Icons.notifications_outlined),
               onPressed: () {},
             ),
           )
@@ -144,7 +137,6 @@ class MainScreen extends StatelessWidget {
           AppSize.lowHeightSizedBox,
           AnimatedCrossFade(
             firstChild: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
@@ -177,7 +169,7 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
-            secondChild: Text("Rasgele Tab Text"),
+            secondChild: const Text("Rasgele Tab Text"),
             crossFadeState: _mainViewModel.mainGroupButtonSelectedIndex.isEven
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
@@ -188,8 +180,8 @@ class MainScreen extends StatelessWidget {
     );
   }
 
-  Container headerBottomButtons() {
-    return Container(
+  SizedBox headerBottomButtons() {
+    return SizedBox(
       height: 150,
       child: ListView.builder(
         itemCount: 3,
@@ -225,7 +217,7 @@ class MainScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              SizedBox(
                 width: 110,
                 child: Stack(
                   alignment: Alignment.centerLeft,
@@ -243,9 +235,10 @@ class MainScreen extends StatelessWidget {
                 ),
               ),
               ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.add),
-                  label: Text('Kişi Ekle')),
+                onPressed: () {},
+                icon: const Icon(Icons.add),
+                label: const Text('Kişi Ekle'),
+              ),
               /*  InkWell(
                 onTap: () {},
                 child: Container(
@@ -289,7 +282,7 @@ class MainScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Eğitimler', style: AppTheme.textStyle.headline6),
+              Text('Trend Eğitimler', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
                   _homeViewModel.homeTabController.jumpToTab(1);
@@ -300,46 +293,28 @@ class MainScreen extends StatelessWidget {
             ],
           ),
           AppSize.lowHeightSizedBox,
-          ListTile(
-            leading: const CircleAvatar(
-              backgroundColor: Colors.white,
-              child: CircleAvatar(
-                radius: 24,
-                backgroundColor: Colors.red,
-                child: Icon(Icons.info),
-                //tamamlandı ise tik olsun
-              ),
-            ),
-            title: Text('Örnek Eğitim', style: AppTheme.textStyle.bodyText2),
-            subtitle: Text(
-              'Eğitimin açıklaması ',
-              style: AppTheme.textStyle.bodyText2,
-            ),
-            trailing: SizedBox(
-              width: 90,
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.filter_alt_outlined),
-                      onPressed: () {},
+          CarouselSlider(
+            options: CarouselOptions(height: 75.0, autoPlay: true),
+            items: [1, 2, 3, 4, 5].map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: const BoxDecoration(
+                      color: Colors.amber,
                     ),
-                  ),
-                  AppSize.lowWidthSizedBox,
-                  CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: IconButton(
-                      color: Colors.white,
-                      icon: const Icon(Icons.notifications_outlined),
-                      onPressed: () {},
+                    child: Center(
+                      child: Text(
+                        'text $i',
+                        style: const TextStyle(fontSize: 16.0),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ),
-          )
+                  );
+                },
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
