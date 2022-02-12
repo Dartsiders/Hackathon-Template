@@ -48,11 +48,11 @@ class FirebaseDatabaseService implements DatabaseService {
     });
   }
 
-  Future<void> addEmergencyContacts(
+  Future<void> addEmergencyContacts(UserModel userModel,
       EmergencyContactModel emergencyContactModel) async {
     await _firebaseFirestore
         .collection("users")
-        .doc("userId")
+        .doc(userModel.userId)
         .collection("emergencyContacts")
         .doc("emergencyContactId")
         .set(emergencyContactModel.toJson());

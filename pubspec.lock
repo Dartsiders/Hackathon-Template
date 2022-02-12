@@ -140,21 +140,21 @@ packages:
       name: cloud_firestore
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.7"
+    version: "3.1.8"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
       name: cloud_firestore_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.4.12"
+    version: "5.4.13"
   cloud_firestore_web:
     dependency: transitive
     description:
       name: cloud_firestore_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.7"
+    version: "2.6.8"
   code_builder:
     dependency: transitive
     description:
@@ -469,6 +469,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  group_button:
+    dependency: "direct main"
+    description:
+      name: group_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.1"
   http:
     dependency: transitive
     description:
@@ -482,7 +489,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.2.0"
   http_parser:
     dependency: transitive
     description:
@@ -643,7 +650,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.9"
   path_provider_android:
     dependency: transitive
     description:
@@ -693,6 +700,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
+  persistent_bottom_nav_bar:
+    dependency: "direct main"
+    description:
+      name: persistent_bottom_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.2"
   petitparser:
     dependency: transitive
     description:

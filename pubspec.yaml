@@ -49,6 +49,8 @@ dependencies:
   # Test
   rename: ^2.0.1
   google_sign_in: ^5.2.3
+  persistent_bottom_nav_bar: ^4.0.2
+  group_button: ^4.2.1
 
 dev_dependencies:
   flutter_test:

@@ -39,11 +39,64 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
+  final _$homeTabControllerAtom =
+      Atom(name: '_HomeViewModelBase.homeTabController');
+
+  @override
+  PersistentTabController get homeTabController {
+    _$homeTabControllerAtom.reportRead();
+    return super.homeTabController;
+  }
+
+  @override
+  set homeTabController(PersistentTabController value) {
+    _$homeTabControllerAtom.reportWrite(value, super.homeTabController, () {
+      super.homeTabController = value;
+    });
+  }
+
+  final _$mainGroupButtonControllerAtom =
+      Atom(name: '_HomeViewModelBase.mainGroupButtonController');
+
+  @override
+  GroupButtonController get mainGroupButtonController {
+    _$mainGroupButtonControllerAtom.reportRead();
+    return super.mainGroupButtonController;
+  }
+
+  @override
+  set mainGroupButtonController(GroupButtonController value) {
+    _$mainGroupButtonControllerAtom
+        .reportWrite(value, super.mainGroupButtonController, () {
+      super.mainGroupButtonController = value;
+    });
+  }
+
+  final _$mainGroupButtonSelectedIndexAtom =
+      Atom(name: '_HomeViewModelBase.mainGroupButtonSelectedIndex');
+
+  @override
+  int get mainGroupButtonSelectedIndex {
+    _$mainGroupButtonSelectedIndexAtom.reportRead();
+    return super.mainGroupButtonSelectedIndex;
+  }
+
+  @override
+  set mainGroupButtonSelectedIndex(int value) {
+    _$mainGroupButtonSelectedIndexAtom
+        .reportWrite(value, super.mainGroupButtonSelectedIndex, () {
+      super.mainGroupButtonSelectedIndex = value;
+    });
+  }
+
   @override
   String toString() {
     return '''
 viewState: ${viewState},
-userModel: ${userModel}
+userModel: ${userModel},
+homeTabController: ${homeTabController},
+mainGroupButtonController: ${mainGroupButtonController},
+mainGroupButtonSelectedIndex: ${mainGroupButtonSelectedIndex}
     ''';
   }
 }

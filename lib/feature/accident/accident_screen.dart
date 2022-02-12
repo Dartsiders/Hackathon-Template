@@ -48,7 +48,7 @@ class _AccidentScreenState extends State<AccidentScreen> {
                             ? FileImage(_accidentViewModel.imageFile!)
                                 as ImageProvider
                             : const NetworkImage(
-                                "",
+                                "http://via.placeholder.com/350x150",
                               ),
                         fit: BoxFit.cover,
                       ),

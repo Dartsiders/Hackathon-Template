@@ -9,6 +9,21 @@ part of 'accident_viewmodel.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
+  final _$imageFileAtom = Atom(name: '_AccidentViewModelBase.imageFile');
+
+  @override
+  File? get imageFile {
+    _$imageFileAtom.reportRead();
+    return super.imageFile;
+  }
+
+  @override
+  set imageFile(File? value) {
+    _$imageFileAtom.reportWrite(value, super.imageFile, () {
+      super.imageFile = value;
+    });
+  }
+
   final _$currentLocationAtom =
       Atom(name: '_AccidentViewModelBase.currentLocation');
 
@@ -25,6 +40,14 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
     });
   }
 
+  final _$setProfileImageAsyncAction =
+      AsyncAction('_AccidentViewModelBase.setProfileImage');
+
+  @override
+  Future<void> setProfileImage() {
+    return _$setProfileImageAsyncAction.run(() => super.setProfileImage());
+  }
+
   final _$getCurrentLocationAsyncAction =
       AsyncAction('_AccidentViewModelBase.getCurrentLocation');
 
@@ -37,6 +60,7 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
   @override
   String toString() {
     return '''
+imageFile: ${imageFile},
 currentLocation: ${currentLocation}
     ''';
   }
