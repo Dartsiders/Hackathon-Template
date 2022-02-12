@@ -25,18 +25,13 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
     });
   }
 
-  final _$_AccidentViewModelBaseActionController =
-      ActionController(name: '_AccidentViewModelBase');
+  final _$getCurrentLocationAsyncAction =
+      AsyncAction('_AccidentViewModelBase.getCurrentLocation');
 
   @override
-  void setCurrentLocation() {
-    final _$actionInfo = _$_AccidentViewModelBaseActionController.startAction(
-        name: '_AccidentViewModelBase.setCurrentLocation');
-    try {
-      return super.setCurrentLocation();
-    } finally {
-      _$_AccidentViewModelBaseActionController.endAction(_$actionInfo);
-    }
+  Future<void> getCurrentLocation() {
+    return _$getCurrentLocationAsyncAction
+        .run(() => super.getCurrentLocation());
   }
 
   @override

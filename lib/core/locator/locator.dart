@@ -3,10 +3,11 @@ import 'package:hackathontemplate/core/services/sign/firebase_sign_service.dart'
 import 'package:hackathontemplate/core/services/sign/social/firebase_social_service.dart';
 import 'package:hackathontemplate/core/services/storage/firebase_storage_service.dart';
 import 'package:hackathontemplate/feature/auth/view_model/auth_view_model.dart';
-import '../services/database/firebase_database_service.dart';
-import '../../feature/init/view_model/init_view_model.dart';
 
+import '../../feature/accident/viewmodel/accident_viewmodel.dart';
 import '../../feature/home/view_model/home_view_model.dart';
+import '../../feature/init/view_model/init_view_model.dart';
+import '../services/database/firebase_database_service.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -14,9 +15,9 @@ void setupLocator() {
   locator.registerLazySingleton(() => InitViewModel());
   locator.registerLazySingleton(() => AuthViewModel());
   locator.registerLazySingleton(() => HomeViewModel());
+  locator.registerLazySingleton(() => AccidentViewModel());
   locator.registerLazySingleton(() => FirebaseDatabaseService());
   locator.registerLazySingleton(() => FirebaseSocialService());
   locator.registerLazySingleton(() => FirebaseSignService());
   locator.registerLazySingleton(() => FirebaseStorageService());
-
 }

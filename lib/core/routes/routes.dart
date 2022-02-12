@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathontemplate/feature/accident/accident_screen.dart';
 import 'package:hackathontemplate/feature/auth/screens/auth_screen.dart';
 import 'package:hackathontemplate/feature/init/screens/init_screen.dart';
 
@@ -9,10 +10,12 @@ class Routes {
   static const String init = '/init';
   static const String home = '/home';
   static const String auth = '/auth';
+  static const String accident = '/accident';
 
   static final routes = <String, WidgetBuilder>{
     home: (BuildContext context) => HomeScreen(),
     init: (BuildContext context) => InitScreen(),
     auth: (BuildContext context) => AuthScreen(),
+    accident: (BuildContext context) => const AccidentScreen(),
   };
 }

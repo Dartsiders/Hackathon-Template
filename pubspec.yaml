@@ -19,6 +19,12 @@ dependencies:
   # Location
   geolocator: ^8.1.1
 
+  # Responsive Design
+  flutter_screenutil: ^5.2.0
+
+  # Utilities
+  image_picker: ^0.8.4+8
+
   # Firebase
   firebase_core: ^1.10.6
   firebase_analytics: ^9.0.4
