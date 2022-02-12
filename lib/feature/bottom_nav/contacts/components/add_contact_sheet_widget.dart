@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:hackathontemplate/core/app/theme/app_text_theme.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contacts_view_model.dart';
 import 'package:hackathontemplate/feature/widgets/rounded_loading_extended_button_widget.dart';
@@ -20,11 +17,18 @@ class _AddContactSheetWidgetState extends State<AddContactSheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(builder: (_) {
-      return Container(
-          padding: EdgeInsets.all(8),
+    return Observer(
+      builder: (_) {
+        return Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.all(8),
           height: 600,
-          color: Colors.white,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,50 +38,55 @@ class _AddContactSheetWidgetState extends State<AddContactSheetWidget> {
                   color: Colors.black87,
                 ),
               ),
-              SizedBox(height: 60),
+              const SizedBox(height: 60),
               Form(
                 key: _contactsViewModel.addContactFormKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Center(
-                      child: InkWell(
-                        onTap: () async => await _contactsViewModel
-                            .pickContactProfilePicture(context),
-                        child: CircleAvatar(
-                          radius: 60,
-                          backgroundColor: Colors.blueAccent,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: InkWell(
+                          onTap: () async => await _contactsViewModel
+                              .pickContactProfilePicture(context),
                           child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 58,
-                            backgroundImage:
-                                _contactsViewModel.imageFile != null
-                                    ? FileImage(
-                                        _contactsViewModel.imageFile!,
-                                      ) as ImageProvider
-                                    : null,
+                            radius: 60,
+                            backgroundColor: Colors.blueAccent,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 58,
+                              backgroundImage:
+                                  _contactsViewModel.imageFile != null
+                                      ? FileImage(
+                                          _contactsViewModel.imageFile!,
+                                        ) as ImageProvider
+                                      : null,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    contactNameTextField(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    phoneNumberImput(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    addContactButton(),
-                  ],
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      contactNameTextField(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      phoneNumberImput(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      addContactButton(),
+                    ],
+                  ),
                 ),
               ),
             ],
-          ));
-    });
+          ),
+        );
+      },
+    );
   }
 
   TextFormField contactNameTextField() {
@@ -105,6 +114,7 @@ class _AddContactSheetWidgetState extends State<AddContactSheetWidget> {
         } else {
           //return 'Hatasız';
         }
+        return null;
       },
     );
   }
@@ -158,6 +168,7 @@ class _AddContactSheetWidgetState extends State<AddContactSheetWidget> {
         if (phoneNumber!.length != 10) {
           return "Telefon numaranızı doğru girdiğinizden emin olun.";
         }
+        return null;
       },
       onSaved: (PhoneNumber phoneNumber) async {
         _contactsViewModel.emergencyContactModel.emergencyContactPhoneNumber =
@@ -168,7 +179,6 @@ class _AddContactSheetWidgetState extends State<AddContactSheetWidget> {
 
   Align addContactButton() {
     return Align(
-      alignment: Alignment.bottomRight,
       child: Column(
         children: [
           RoundedLoadingExtendedButtonWidget(

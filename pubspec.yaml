@@ -11,7 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-    
+
   cupertino_icons: ^1.0.4
 
   flutter_localizations:
@@ -29,6 +29,7 @@ dependencies:
   flutter_svg: ^1.0.0
   fluttertoast: ^8.0.8
   lottie: ^1.2.1
+  carousel_slider: ^4.0.0
 
   # Firebase
   firebase_core: ^1.10.6
