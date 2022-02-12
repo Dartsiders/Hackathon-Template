@@ -24,7 +24,6 @@ class _AccidentScreenState extends State<AccidentScreen> {
   @override
   void initState() {
     _initViewModel.setLocationPermission();
-
     super.initState();
   }
 
