@@ -15,15 +15,10 @@ abstract class _HomeViewModelBase with Store {
 
   @observable
   UserModel? userModel = UserModel();
-
+  
   @observable
   PersistentTabController homeTabController = PersistentTabController();
 
   @observable
-  GroupButtonController mainGroupButtonController = GroupButtonController(
-    selectedIndex: 0,
-  );
-
-  @observable
-  int mainGroupButtonSelectedIndex = 0;
+  bool? isTabHide = false;
 }

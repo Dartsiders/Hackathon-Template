@@ -48,21 +48,37 @@ class FirebaseDatabaseService implements DatabaseService {
     });
   }
 
-  Future<void> addEmergencyContacts(UserModel userModel,
-      EmergencyContactModel emergencyContactModel) async {
-   var documentRef = await _firebaseFirestore
+  @override
+  Future<void> saveEmergencyContact(
+      UserModel userModel, EmergencyContactModel emergencyContactModel) async {
+    var documentRef = await _firebaseFirestore
         .collection("users")
-        .doc(emergencyContactModel.emergencyContactId)
-        .collection("emergencyContacts")
+        .doc(userModel.userId)
+        .collection("emergencycontacts")
         .doc();
-        emergencyContactModel.emergencyContactId = documentRef.id;
-        documentRef.set(emergencyContactModel.toJson());
+    emergencyContactModel.emergencyContactId = documentRef.id;
+    documentRef.set(emergencyContactModel.toJson());
   }
 
+  @override
+  Future<List<EmergencyContactModel>> getEmergencyContact(
+      UserModel userModel) async {
+    var contactList = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("emergencycontacts")
+        .get()
+        .then((value) => value.docs.map((doc) {
+              return EmergencyContactModel.fromJson(doc.data());
+            }).toList());
+    return contactList;
+  }
+
+  @override
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
-     final document = _firebaseFirestore.collection("emergency").doc();
-     emergencyModel.emergencyId = document.id;
-     emergencyModel.emergencyTime = Timestamp.now().toDate();
-     document.set(emergencyModel.toJson());
+    final document = _firebaseFirestore.collection("emergency").doc();
+    emergencyModel.emergencyId = document.id;
+    emergencyModel.emergencyTime = Timestamp.now().toDate();
+    document.set(emergencyModel.toJson());
   }
 }
