@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hackathontemplate/core/models/emergency/emergency_model.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
-import 'package:hackathontemplate/core/services/storage/firebase_storage_service.dart';
 
-import '../../locator/locator.dart';
 import '../../models/user_model/user_model.dart';
 
 import 'database_service.dart';
@@ -48,21 +47,46 @@ class FirebaseDatabaseService implements DatabaseService {
     });
   }
 
-  Future<void> addEmergencyContacts(UserModel userModel,
-      EmergencyContactModel emergencyContactModel) async {
-   var documentRef = await _firebaseFirestore
+  Future<bool> checkSameLocation(EmergencyModel emergencyModel) async {
+    final resultLatitude = await FirebaseFirestore.instance
+        .collection("emergency")
+        .where(
+          "emergencyLocationLatitude",
+          isEqualTo: emergencyModel.emergencyLocationLatitude,
+        )
+        .get();
+    final resultLongitude = await FirebaseFirestore.instance
+        .collection("emergency")
+        .where(
+          "emergencyLocationLongitude",
+          isEqualTo: emergencyModel.emergencyLocationLongitude,
+        )
+        .get();
+    return resultLatitude.docs.isEmpty && resultLongitude.docs.isEmpty;
+  }
+
+  Future<void> addEmergencyContacts(
+      UserModel userModel, EmergencyContactModel emergencyContactModel) async {
+    final documentRef = _firebaseFirestore
         .collection("users")
         .doc(emergencyContactModel.emergencyContactId)
         .collection("emergencyContacts")
         .doc();
-        emergencyContactModel.emergencyContactId = documentRef.id;
-        documentRef.set(emergencyContactModel.toJson());
+    emergencyContactModel.emergencyContactId = documentRef.id;
+    documentRef.set(emergencyContactModel.toJson());
   }
 
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
-     final document = _firebaseFirestore.collection("emergency").doc();
-     emergencyModel.emergencyId = document.id;
-     emergencyModel.emergencyTime = Timestamp.now().toDate();
-     document.set(emergencyModel.toJson());
+    final bool valid = await checkSameLocation(emergencyModel);
+    if (!valid) {
+      Fluttertoast.showToast(
+        msg: "Acil Durum Çoktan Belirtildi Dikkatiniz İçin Teşekkürler",
+      );
+    } else {
+      final document = _firebaseFirestore.collection("emergency").doc();
+      emergencyModel.emergencyId = document.id;
+      emergencyModel.emergencyTime = Timestamp.now().toDate();
+      document.set(emergencyModel.toJson());
+    }
   }
 }
