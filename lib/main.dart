@@ -38,6 +38,8 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: AppLocalizations.supportedLocales,
           locale: _initViewModel.locale,
           theme: _initViewModel.appTheme,
+          themeMode:
+              _initViewModel.isDarkModel ? ThemeMode.dark : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           title: "Hackathon Template",
           initialRoute: Routes.accident,

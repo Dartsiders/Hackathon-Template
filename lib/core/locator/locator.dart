@@ -16,6 +16,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => AuthViewModel());
   locator.registerLazySingleton(() => HomeViewModel());
   locator.registerLazySingleton(() => AccidentViewModel());
+  
   locator.registerLazySingleton(() => FirebaseDatabaseService());
   locator.registerLazySingleton(() => FirebaseSocialService());
   locator.registerLazySingleton(() => FirebaseSignService());

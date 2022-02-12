@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hackathontemplate/core/models/emergency/emergency_model.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
+import 'package:hackathontemplate/core/services/storage/firebase_storage_service.dart';
 
+import '../../locator/locator.dart';
 import '../../models/user_model/user_model.dart';
 
 import 'database_service.dart';
@@ -46,20 +48,20 @@ class FirebaseDatabaseService implements DatabaseService {
     });
   }
 
-  Future<void> addEmergencyContacts(
+  Future<void> addEmergencyContacts(UserModel userModel,
       EmergencyContactModel emergencyContactModel) async {
     await _firebaseFirestore
         .collection("users")
-        .doc(emergencyContactModel.emergencyContactId)
+        .doc("userId")
         .collection("emergencyContacts")
         .doc("emergencyContactId")
         .set(emergencyContactModel.toJson());
   }
 
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
-    final document = _firebaseFirestore.collection("emergency").doc();
-    emergencyModel.emergencyId = document.id;
-    emergencyModel.emergencyTime = Timestamp.now().toDate();
-    document.set(emergencyModel.toJson());
+    await _firebaseFirestore
+        .collection("emergency")
+        .doc()
+        .set(emergencyModel.toJson());
   }
 }
