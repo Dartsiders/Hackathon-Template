@@ -40,8 +40,7 @@ mixin _$VerificationVM on _VerificationVMBase, Store {
   @override
   void changePath() {
     final _$actionInfo = _$_VerificationVMBaseActionController.startAction(
-      name: '_VerificationVMBase.changePath',
-    );
+        name: '_VerificationVMBase.changePath');
     try {
       return super.changePath();
     } finally {
