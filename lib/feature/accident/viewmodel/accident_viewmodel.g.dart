@@ -24,6 +24,22 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
     });
   }
 
+  final _$reportDescriptionAtom =
+      Atom(name: '_AccidentViewModelBase.reportDescription');
+
+  @override
+  String? get reportDescription {
+    _$reportDescriptionAtom.reportRead();
+    return super.reportDescription;
+  }
+
+  @override
+  set reportDescription(String? value) {
+    _$reportDescriptionAtom.reportWrite(value, super.reportDescription, () {
+      super.reportDescription = value;
+    });
+  }
+
   final _$currentLocationAtom =
       Atom(name: '_AccidentViewModelBase.currentLocation');
 
@@ -40,6 +56,21 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
     });
   }
 
+  final _$reportDateAtom = Atom(name: '_AccidentViewModelBase.reportDate');
+
+  @override
+  String? get reportDate {
+    _$reportDateAtom.reportRead();
+    return super.reportDate;
+  }
+
+  @override
+  set reportDate(String? value) {
+    _$reportDateAtom.reportWrite(value, super.reportDate, () {
+      super.reportDate = value;
+    });
+  }
+
   final _$setProfileImageAsyncAction =
       AsyncAction('_AccidentViewModelBase.setProfileImage');
 
@@ -48,20 +79,22 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
     return _$setProfileImageAsyncAction.run(() => super.setProfileImage());
   }
 
-  final _$getCurrentLocationAsyncAction =
-      AsyncAction('_AccidentViewModelBase.getCurrentLocation');
+  final _$reportEmergencyAsyncAction =
+      AsyncAction('_AccidentViewModelBase.reportEmergency');
 
   @override
-  Future<void> getCurrentLocation() {
-    return _$getCurrentLocationAsyncAction
-        .run(() => super.getCurrentLocation());
+  Future<void> reportEmergency(String description) {
+    return _$reportEmergencyAsyncAction
+        .run(() => super.reportEmergency(description));
   }
 
   @override
   String toString() {
     return '''
 imageFile: ${imageFile},
-currentLocation: ${currentLocation}
+reportDescription: ${reportDescription},
+currentLocation: ${currentLocation},
+reportDate: ${reportDate}
     ''';
   }
 }

@@ -7,9 +7,11 @@ import 'package:hackathontemplate/core/services/storage/storage_service.dart';
 class FirebaseStorageService implements StorageService {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
-   @override
+  @override
   Future<String> emergencyPictureSaveStorage(
-      EmergencyModel emergencyModel, File profilePicture,) async {
+    EmergencyModel emergencyModel,
+    File profilePicture,
+  ) async {
     String downloadUrl = "";
 
     final storageReference = _firebaseStorage
