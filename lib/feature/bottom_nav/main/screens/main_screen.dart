@@ -15,14 +15,13 @@ class MainScreen extends StatelessWidget {
   final MainViewModel _mainViewModel = locator<MainViewModel>();
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
 
-
   @override
   Widget build(BuildContext context) {
-
-    return Observer(builder: (_) {
-      return Scaffold(
-        //status bar renk değiştirmiyo sor
-        body: Container(
+    return Observer(
+      builder: (_) {
+        return Scaffold(
+            //status bar renk değiştirmiyo sor
+            body: Container(
           padding: EdgeInsets.all(16),
           child: Column(
             children: <Widget>[
@@ -47,9 +46,8 @@ class MainScreen extends StatelessWidget {
                 child: bodyBottomEducations(_homeViewModel),
               )
             ],
-
           ),
-        );
+        ));
       },
     );
   }
@@ -81,7 +79,6 @@ class MainScreen extends StatelessWidget {
             child: IconButton(
               color: Colors.black.withOpacity(0.7),
               icon: Icon(Icons.filter_alt_outlined),
-
               onPressed: () {},
             ),
           ),
@@ -89,10 +86,8 @@ class MainScreen extends StatelessWidget {
             radius: 24,
             backgroundColor: AppTheme.theme.dividerColor.withOpacity(0.04),
             child: IconButton(
-
               color: Colors.black.withOpacity(0.7),
               icon: Icon(Icons.notifications_outlined),
-
               onPressed: () {},
             ),
           )
@@ -113,10 +108,8 @@ class MainScreen extends StatelessWidget {
               GroupButton(
                 controller: _mainViewModel.mainGroupButtonController,
                 onSelected: (index, isSelected) async {
-
                   _mainViewModel.mainGroupButtonSelectedIndex = index;
                   print(index);
-
                 },
                 spacing: 0,
                 alignment: Alignment.centerLeft,
@@ -184,10 +177,8 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
-
             secondChild: Text("Rasgele Tab Text"),
             crossFadeState: _mainViewModel.mainGroupButtonSelectedIndex.isEven
-
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
             duration: AppDuration.lowDuration,
@@ -206,7 +197,6 @@ class MainScreen extends StatelessWidget {
         itemBuilder: (context, index) => HeaderBottomButtonWidget(
           model: _mainViewModel.headerBottomButtonModelList[index],
         ),
-
       ),
     );
   }
@@ -221,11 +211,10 @@ class MainScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
               Text('Kişiler', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
-                   _homeViewModel.homeTabController.jumpToTab(3);
+                  _homeViewModel.homeTabController.jumpToTab(3);
                 },
                 child:
                     Text('Tümünü Görüntüle', style: AppTheme.textStyle.caption),
@@ -245,7 +234,6 @@ class MainScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 24.0),
                       child: ContactAvatarWidget(),
-
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 58.0),
@@ -304,8 +292,7 @@ class MainScreen extends StatelessWidget {
               Text('Eğitimler', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
-                   _homeViewModel.homeTabController.jumpToTab(1);
-
+                  _homeViewModel.homeTabController.jumpToTab(1);
                 },
                 child:
                     Text('Tümünü Görüntüle', style: AppTheme.textStyle.caption),
