@@ -63,7 +63,9 @@ abstract class _ContactsViewModelBase with Store {
       }
 
       await _firebaseDatabaseService.saveEmergencyContact(
-          _homeViewModel.userModel!, emergencyContactModel);
+        _homeViewModel.userModel!,
+        emergencyContactModel,
+      );
       print("emergency contact saved");
     } catch (e) {
       print(e);
