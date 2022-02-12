@@ -23,4 +23,20 @@ class FirebaseStorageService implements StorageService {
     });
     return downloadUrl;
   }
+
+  @override
+  Future<String> contactProfilePictureSave(
+    File profilePicture,
+  ) async {
+    String downloadUrl = "";
+
+    final storageReference = _firebaseStorage
+        .ref()
+        .child(profilePicture.path.split("/").last);
+
+    await storageReference.putFile(profilePicture).then((value) async {
+      downloadUrl = await value.ref.getDownloadURL();
+    });
+    return downloadUrl;
+  }
 }

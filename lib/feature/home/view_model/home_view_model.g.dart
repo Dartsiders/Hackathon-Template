@@ -55,37 +55,18 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
-  final _$mainGroupButtonControllerAtom =
-      Atom(name: '_HomeViewModelBase.mainGroupButtonController');
+  final _$isTabHideAtom = Atom(name: '_HomeViewModelBase.isTabHide');
 
   @override
-  GroupButtonController get mainGroupButtonController {
-    _$mainGroupButtonControllerAtom.reportRead();
-    return super.mainGroupButtonController;
+  bool? get isTabHide {
+    _$isTabHideAtom.reportRead();
+    return super.isTabHide;
   }
 
   @override
-  set mainGroupButtonController(GroupButtonController value) {
-    _$mainGroupButtonControllerAtom
-        .reportWrite(value, super.mainGroupButtonController, () {
-      super.mainGroupButtonController = value;
-    });
-  }
-
-  final _$mainGroupButtonSelectedIndexAtom =
-      Atom(name: '_HomeViewModelBase.mainGroupButtonSelectedIndex');
-
-  @override
-  int get mainGroupButtonSelectedIndex {
-    _$mainGroupButtonSelectedIndexAtom.reportRead();
-    return super.mainGroupButtonSelectedIndex;
-  }
-
-  @override
-  set mainGroupButtonSelectedIndex(int value) {
-    _$mainGroupButtonSelectedIndexAtom
-        .reportWrite(value, super.mainGroupButtonSelectedIndex, () {
-      super.mainGroupButtonSelectedIndex = value;
+  set isTabHide(bool? value) {
+    _$isTabHideAtom.reportWrite(value, super.isTabHide, () {
+      super.isTabHide = value;
     });
   }
 
@@ -95,8 +76,7 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
 viewState: ${viewState},
 userModel: ${userModel},
 homeTabController: ${homeTabController},
-mainGroupButtonController: ${mainGroupButtonController},
-mainGroupButtonSelectedIndex: ${mainGroupButtonSelectedIndex}
+isTabHide: ${isTabHide}
     ''';
   }
 }

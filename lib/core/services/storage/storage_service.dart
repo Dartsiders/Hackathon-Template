@@ -7,4 +7,7 @@ abstract class StorageService {
     EmergencyModel emergencyModel,
     File profilePicture,
   );
+  Future<String> contactProfilePictureSave(
+    File profilePicture,
+  );
 }

@@ -46,7 +46,7 @@ class FirebaseDatabaseService implements DatabaseService {
       }
     });
   }
-
+  
   Future<bool> checkSameLocation(EmergencyModel emergencyModel) async {
     final resultLatitude = await FirebaseFirestore.instance
         .collection("emergency")
@@ -65,18 +65,36 @@ class FirebaseDatabaseService implements DatabaseService {
     return resultLatitude.docs.isEmpty && resultLongitude.docs.isEmpty;
   }
 
-  Future<void> addEmergencyContacts(
+
+  @override
+  Future<void> saveEmergencyContact(
       UserModel userModel, EmergencyContactModel emergencyContactModel) async {
-    final documentRef = _firebaseFirestore
+    var documentRef = await _firebaseFirestore
         .collection("users")
-        .doc(emergencyContactModel.emergencyContactId)
-        .collection("emergencyContacts")
+        .doc(userModel.userId)
+        .collection("emergencycontacts")
         .doc();
     emergencyContactModel.emergencyContactId = documentRef.id;
     documentRef.set(emergencyContactModel.toJson());
   }
 
+  @override
+  Future<List<EmergencyContactModel>> getEmergencyContact(
+      UserModel userModel) async {
+    var contactList = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("emergencycontacts")
+        .get()
+        .then((value) => value.docs.map((doc) {
+              return EmergencyContactModel.fromJson(doc.data());
+            }).toList());
+    return contactList;
+  }
+
+  @override
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
+
     final bool valid = await checkSameLocation(emergencyModel);
     if (!valid) {
       Fluttertoast.showToast(
@@ -88,5 +106,6 @@ class FirebaseDatabaseService implements DatabaseService {
       emergencyModel.emergencyTime = Timestamp.now().toDate();
       document.set(emergencyModel.toJson());
     }
+
   }
 }

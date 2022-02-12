@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
 import 'package:hackathontemplate/feature/bottom_nav/accident/accident_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
@@ -18,40 +19,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      context,
-      controller: _homeViewModel.homeTabController,
-      screens: _buildScreens(),
-      items: _navBarsItems(),
-      confineInSafeArea: true,
-      backgroundColor:
-          Colors.blueAccent.withOpacity(0.3), // Default is Colors.white.
-      handleAndroidBackButtonPress: true, // Default is true.
-      resizeToAvoidBottomInset:
-          true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-      stateManagement: true, // Default is true.
-      hideNavigationBarWhenKeyboardShows:
-          true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
-      ),
-      popAllScreensOnTapOfSelectedTab: true,
-      popActionScreens: PopActionScreensType.all,
-      itemAnimationProperties: ItemAnimationProperties(
-        // Navigation Bar's items animation properties.
-        duration: Duration(milliseconds: 200),
-        curve: Curves.ease,
-      ),
-      screenTransitionAnimation: ScreenTransitionAnimation(
-        // Screen transition animation on change of selected tab.
-        animateTabTransition: true,
-        curve: Curves.ease,
-        duration: Duration(milliseconds: 200),
-      ),
-      navBarStyle:
-          NavBarStyle.style16, // Choose the nav bar style with this property.
-    );
+    return Observer(builder: (_) {
+      return PersistentTabView(
+        context,
+        controller: _homeViewModel.homeTabController,
+        screens: _buildScreens(),
+        items: _navBarsItems(),
+        backgroundColor: AppTheme.theme.primaryColor.withOpacity(0.3),
+        resizeToAvoidBottomInset: true,
+        hideNavigationBar: _homeViewModel.isTabHide,
+        decoration: NavBarDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          colorBehindNavBar: Colors.white,
+        ),
+        itemAnimationProperties: const ItemAnimationProperties(
+          duration: Duration(milliseconds: 200),
+          curve: Curves.ease,
+        ),
+        screenTransitionAnimation: const ScreenTransitionAnimation(
+          animateTabTransition: true,
+        ),
+        navBarStyle:
+            NavBarStyle.style16, // Choose the nav bar style with this property.
+      );
+    });
   }
 
   List<Widget> _buildScreens() {
@@ -69,16 +60,17 @@ class HomeScreen extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.home),
         title: ("Home"),
-        activeColorPrimary: CupertinoColors.activeBlue,
+        activeColorPrimary: AppTheme.theme.primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.school),
         title: ("Courses"),
-        activeColorPrimary: CupertinoColors.activeBlue,
+        activeColorPrimary: AppTheme.theme.primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
+        activeColorPrimary: AppTheme.theme.primaryColor,
         icon: Icon(
           Icons.add,
           color: Colors.white,
@@ -87,13 +79,13 @@ class HomeScreen extends StatelessWidget {
       PersistentBottomNavBarItem(
         icon: Icon(Icons.contacts),
         title: ("Contact"),
-        activeColorPrimary: CupertinoColors.activeBlue,
+        activeColorPrimary: AppTheme.theme.primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),
         title: ("Settings"),
-        activeColorPrimary: CupertinoColors.activeBlue,
+        activeColorPrimary: AppTheme.theme.primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
     ];
