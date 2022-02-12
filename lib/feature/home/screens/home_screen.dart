@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
-import 'package:hackathontemplate/feature/home/screens/tabs/settings_page.dart';
-import 'package:hackathontemplate/feature/home/screens/tabs/emergency_share_page.dart';
-import 'package:hackathontemplate/feature/home/screens/tabs/main_page.dart';
+import 'package:hackathontemplate/feature/bottom_nav/accident/accident_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/courses/screens/courses_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/main/screens/main_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/settings/screens/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import '../view_model/home_view_model.dart';
 
@@ -53,7 +55,13 @@ class HomeScreen extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [MainPage(), EmergencySharePage(), SettingsPage()];
+    return [
+      MainScreen(),
+      CoursesScreen(),
+      AccidentScreen(),
+      ContactsScreen(),
+      SettingsScreen()
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -65,10 +73,22 @@ class HomeScreen extends StatelessWidget {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
+        icon: Icon(Icons.school),
+        title: ("Courses"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
         icon: Icon(
           Icons.add,
           color: Colors.white,
         ),
+      ),
+      PersistentBottomNavBarItem(
+        icon: Icon(Icons.contacts),
+        title: ("Contact"),
+        activeColorPrimary: CupertinoColors.activeBlue,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),

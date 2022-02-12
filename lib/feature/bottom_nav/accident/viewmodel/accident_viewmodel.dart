@@ -7,9 +7,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../core/models/emergency/emergency_model.dart';
-import '../../../core/services/database/firebase_database_service.dart';
-import '../../../core/services/storage/firebase_storage_service.dart';
+import '../../../../core/models/emergency/emergency_model.dart';
+import '../../../../core/services/database/firebase_database_service.dart';
+import '../../../../core/services/storage/firebase_storage_service.dart';
 
 part 'accident_viewmodel.g.dart';
 
