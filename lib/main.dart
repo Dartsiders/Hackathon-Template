@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
               _initViewModel.isDarkModel ? ThemeMode.dark : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           title: "Hackathon Template",
-          initialRoute: Routes.accident,
+          initialRoute: Routes.home,
           routes: Routes.routes,
         ),
       ),

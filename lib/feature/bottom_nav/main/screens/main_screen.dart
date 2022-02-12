@@ -8,7 +8,7 @@ import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
 
 import '../../../../core/locator/locator.dart';
 
-class MainPage extends StatelessWidget {
+class MainScreen extends StatelessWidget {
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
 
   @override
