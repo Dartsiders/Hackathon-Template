@@ -14,7 +14,7 @@ class _InitScreenState extends State<InitScreen> {
   final InitViewModel _initViewModel = locator<InitViewModel>();
 
   Future<void> isFirstTime() async {
-    bool isUserExist = await _initViewModel.currentUser();
+    final bool isUserExist = await _initViewModel.currentUser();
     //await Future.delayed(Duration(milliseconds: 100));
     if (isUserExist) {
       setState(() {
@@ -31,7 +31,6 @@ class _InitScreenState extends State<InitScreen> {
   @override
   void initState() {
     super.initState();
-
     isFirstTime();
   }
 
@@ -39,7 +38,7 @@ class _InitScreenState extends State<InitScreen> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.blueAccent.withOpacity(0.5),
-      child: Center(
+      child: const Center(
         child: CircularProgressIndicator(),
       ),
     );
