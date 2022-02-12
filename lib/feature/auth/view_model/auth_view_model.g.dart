@@ -178,8 +178,7 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   @override
   void changePasswordVisibility() {
     final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
-      name: '_AuthViewModelBase.changePasswordVisibility',
-    );
+        name: '_AuthViewModelBase.changePasswordVisibility');
     try {
       return super.changePasswordVisibility();
     } finally {
@@ -190,8 +189,7 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   @override
   void onEmailChanged(String value) {
     final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
-      name: '_AuthViewModelBase.onEmailChanged',
-    );
+        name: '_AuthViewModelBase.onEmailChanged');
     try {
       return super.onEmailChanged(value);
     } finally {
@@ -202,8 +200,7 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   @override
   void onNameChanged(String value) {
     final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
-      name: '_AuthViewModelBase.onNameChanged',
-    );
+        name: '_AuthViewModelBase.onNameChanged');
     try {
       return super.onNameChanged(value);
     } finally {
@@ -214,8 +211,7 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   @override
   void onPassChange(String value) {
     final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
-      name: '_AuthViewModelBase.onPassChange',
-    );
+        name: '_AuthViewModelBase.onPassChange');
     try {
       return super.onPassChange(value);
     } finally {

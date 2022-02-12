@@ -31,7 +31,7 @@ class Routes {
     accident: (BuildContext context) => const AccidentScreen(),
     main: (BuildContext context) => MainScreen(),
     courses: (BuildContext context) => CoursesScreen(),
-    contacts: (BuildContext context) => const ContactsScreen(),
+    contacts: (BuildContext context) =>  ContactsScreen(),
     settings: (BuildContext context) => const SettingsScreen(),
     verification: (BuildContext context) => const VerificationScreen(),
   };
