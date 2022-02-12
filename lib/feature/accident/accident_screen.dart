@@ -19,6 +19,7 @@ class AccidentScreen extends StatefulWidget {
 class _AccidentScreenState extends State<AccidentScreen> {
   final InitViewModel _initViewModel = locator<InitViewModel>();
   final AccidentViewModel _accidentViewModel = locator<AccidentViewModel>();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -81,13 +82,26 @@ class _AccidentScreenState extends State<AccidentScreen> {
                   ),
                 ),
                 AppSize.mediumHeightSizedBox,
-                const AccidentDescriptionField(),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextField(
+                    controller: _descriptionController,
+                    maxLines: 8,
+                    decoration: InputDecoration(
+                      hintText: 'Kaza Hakkında Kısa Bilgi...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.r),
+                      ),
+                    ),
+                  ),
+                ),
                 AppSize.mediumHeightSizedBox,
                 SizedBox(
                   height: 70.h,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      _accidentViewModel.getCurrentLocation();
+                      _accidentViewModel
+                          .reportEmergency(_descriptionController.text);
                     },
                     icon: Icon(
                       Icons.report_gmailerrorred,
@@ -113,88 +127,6 @@ class _AccidentScreenState extends State<AccidentScreen> {
         'Report an accident',
       ),
       centerTitle: true,
-    );
-  }
-}
-
-class ReportAccidentButton extends StatelessWidget {
-  const ReportAccidentButton({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 70.h,
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        icon: Icon(
-          Icons.report_gmailerrorred,
-          size: 50.sp,
-        ),
-        label: Text(
-          "Kaza Bildir",
-          style: AppTextTheme.textTheme.headline6,
-        ),
-      ),
-    );
-  }
-}
-
-class AccidentDescriptionField extends StatelessWidget {
-  const AccidentDescriptionField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: TextField(
-        maxLines: 8,
-        decoration: InputDecoration(
-          hintText: 'Kaza Hakkında Kısa Bilgi...',
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.r),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class AccidentPhotoField extends StatelessWidget {
-  const AccidentPhotoField({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColor.greyColor,
-        borderRadius: BorderRadius.circular(15.r),
-      ),
-      height: 250.h,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.add_a_photo_outlined,
-              size: 50.sp,
-              color: AppColor.whiteColor,
-            ),
-            AppSize.mediumHeightSizedBox,
-            Text(
-              'Kazanın fotoğrafını yükleyin',
-              style: AppTextTheme.textTheme.headline5?.copyWith(
-                color: AppColor.whiteColor,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
