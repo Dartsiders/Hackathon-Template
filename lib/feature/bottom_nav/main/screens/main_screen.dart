@@ -18,6 +18,7 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Observer(builder: (_) {
       return Scaffold(
         //status bar renk değiştirmiyo sor
@@ -46,10 +47,11 @@ class MainScreen extends StatelessWidget {
                 child: bodyBottomEducations(_homeViewModel),
               )
             ],
+
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   Container headerTopProfile() {
@@ -57,7 +59,6 @@ class MainScreen extends StatelessWidget {
       // color: Colors.green,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CircleAvatar(
             backgroundColor: AppTheme.theme.primaryColor,
@@ -80,6 +81,7 @@ class MainScreen extends StatelessWidget {
             child: IconButton(
               color: Colors.black.withOpacity(0.7),
               icon: Icon(Icons.filter_alt_outlined),
+
               onPressed: () {},
             ),
           ),
@@ -87,8 +89,10 @@ class MainScreen extends StatelessWidget {
             radius: 24,
             backgroundColor: AppTheme.theme.dividerColor.withOpacity(0.04),
             child: IconButton(
+
               color: Colors.black.withOpacity(0.7),
               icon: Icon(Icons.notifications_outlined),
+
               onPressed: () {},
             ),
           )
@@ -109,13 +113,13 @@ class MainScreen extends StatelessWidget {
               GroupButton(
                 controller: _mainViewModel.mainGroupButtonController,
                 onSelected: (index, isSelected) async {
+
                   _mainViewModel.mainGroupButtonSelectedIndex = index;
                   print(index);
+
                 },
                 spacing: 0,
                 alignment: Alignment.centerLeft,
-                textPadding: EdgeInsets.zero,
-                textAlign: TextAlign.left,
                 groupingType: GroupingType.row,
                 elevation: 0,
                 buttonHeight: 50,
@@ -136,8 +140,8 @@ class MainScreen extends StatelessWidget {
                 ),
                 selectedColor: Colors.transparent,
                 unselectedColor: Colors.transparent,
-                selectedShadow: [],
-                unselectedShadow: [],
+                selectedShadow: const [],
+                unselectedShadow: const [],
 
                 //buttonHeight: 50,
                 //buttonWidth: 100,
@@ -180,8 +184,10 @@ class MainScreen extends StatelessWidget {
                 ),
               ],
             ),
+
             secondChild: Text("Rasgele Tab Text"),
             crossFadeState: _mainViewModel.mainGroupButtonSelectedIndex.isEven
+
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
             duration: AppDuration.lowDuration,
@@ -200,6 +206,7 @@ class MainScreen extends StatelessWidget {
         itemBuilder: (context, index) => HeaderBottomButtonWidget(
           model: _mainViewModel.headerBottomButtonModelList[index],
         ),
+
       ),
     );
   }
@@ -214,6 +221,7 @@ class MainScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
               Text('Kişiler', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
@@ -237,6 +245,7 @@ class MainScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 24.0),
                       child: ContactAvatarWidget(),
+
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 58.0),
@@ -261,10 +270,12 @@ class MainScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+
                       Icon(
                         Icons.add,
                         color: Colors.black87,
                       ),
+
                       AppSize.lowWidthSizedBox,
                       Text('Kişi Ekle',
                           style: AppTheme.textStyle.bodyText2?.copyWith(
@@ -303,7 +314,7 @@ class MainScreen extends StatelessWidget {
           ),
           AppSize.lowHeightSizedBox,
           ListTile(
-            leading: CircleAvatar(
+            leading: const CircleAvatar(
               backgroundColor: Colors.white,
               child: CircleAvatar(
                 radius: 24,
@@ -313,9 +324,11 @@ class MainScreen extends StatelessWidget {
               ),
             ),
             title: Text('Örnek Eğitim', style: AppTheme.textStyle.bodyText2),
-            subtitle: Text('Eğitimin açıklaması ',
-                style: AppTheme.textStyle.bodyText2),
-            trailing: Container(
+            subtitle: Text(
+              'Eğitimin açıklaması ',
+              style: AppTheme.textStyle.bodyText2,
+            ),
+            trailing: SizedBox(
               width: 90,
               child: Row(
                 children: [
@@ -323,7 +336,7 @@ class MainScreen extends StatelessWidget {
                     backgroundColor: Colors.blue,
                     child: IconButton(
                       color: Colors.white,
-                      icon: Icon(Icons.filter_alt_outlined),
+                      icon: const Icon(Icons.filter_alt_outlined),
                       onPressed: () {},
                     ),
                   ),
@@ -332,7 +345,7 @@ class MainScreen extends StatelessWidget {
                     backgroundColor: Colors.blue,
                     child: IconButton(
                       color: Colors.white,
-                      icon: Icon(Icons.notifications_outlined),
+                      icon: const Icon(Icons.notifications_outlined),
                       onPressed: () {},
                     ),
                   )

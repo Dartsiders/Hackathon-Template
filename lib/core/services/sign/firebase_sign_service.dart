@@ -1,6 +1,4 @@
-
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hackathontemplate/core/services/sign/sign_service.dart';
 
@@ -34,6 +32,14 @@ class FirebaseSignService implements SignService {
     }
   }
 
+  Future<bool> uniqUserCheck(String mail) async {
+    final result = await FirebaseFirestore.instance
+        .collection("users")
+        .where('email', isEqualTo: mail)
+        .get();
+    return result.docs.isEmpty;
+  }
+
   @override
   Future<UserModel> signInWithGoogle(AuthCredential authCredential) async {
     final UserCredential _userCredential =
@@ -49,6 +55,4 @@ class FirebaseSignService implements SignService {
         await _firebaseAuth.signInWithPopup(googleProvider);
     return _userFromFirebase(_userCredential.user);
   }
-
-  
 }

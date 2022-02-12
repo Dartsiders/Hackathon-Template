@@ -24,6 +24,67 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
     });
   }
 
+  final _$emailAtom = Atom(name: '_AuthViewModelBase.email');
+
+  @override
+  String? get email {
+    _$emailAtom.reportRead();
+    return super.email;
+  }
+
+  @override
+  set email(String? value) {
+    _$emailAtom.reportWrite(value, super.email, () {
+      super.email = value;
+    });
+  }
+
+  final _$passwordAtom = Atom(name: '_AuthViewModelBase.password');
+
+  @override
+  String? get password {
+    _$passwordAtom.reportRead();
+    return super.password;
+  }
+
+  @override
+  set password(String? value) {
+    _$passwordAtom.reportWrite(value, super.password, () {
+      super.password = value;
+    });
+  }
+
+  final _$nameAtom = Atom(name: '_AuthViewModelBase.name');
+
+  @override
+  String? get name {
+    _$nameAtom.reportRead();
+    return super.name;
+  }
+
+  @override
+  set name(String? value) {
+    _$nameAtom.reportWrite(value, super.name, () {
+      super.name = value;
+    });
+  }
+
+  final _$isPasswordVisibleAtom =
+      Atom(name: '_AuthViewModelBase.isPasswordVisible');
+
+  @override
+  bool get isPasswordVisible {
+    _$isPasswordVisibleAtom.reportRead();
+    return super.isPasswordVisible;
+  }
+
+  @override
+  set isPasswordVisible(bool value) {
+    _$isPasswordVisibleAtom.reportWrite(value, super.isPasswordVisible, () {
+      super.isPasswordVisible = value;
+    });
+  }
+
   final _$viewStateAtom = Atom(name: '_AuthViewModelBase.viewState');
 
   @override
@@ -39,6 +100,14 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
     });
   }
 
+  final _$createAccountAsyncAction =
+      AsyncAction('_AuthViewModelBase.createAccount');
+
+  @override
+  Future<dynamic> createAccount(BuildContext context) {
+    return _$createAccountAsyncAction.run(() => super.createAccount(context));
+  }
+
   final _$signInWithGoogleAsyncAction =
       AsyncAction('_AuthViewModelBase.signInWithGoogle');
 
@@ -46,6 +115,16 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
   Future<void> signInWithGoogle(BuildContext context) {
     return _$signInWithGoogleAsyncAction
         .run(() => super.signInWithGoogle(context));
+  }
+
+  final _$authenticationAsyncAction =
+      AsyncAction('_AuthViewModelBase.authentication');
+
+  @override
+  Future<dynamic> authentication(
+      BuildContext context, GlobalKey<FormState> formKey) {
+    return _$authenticationAsyncAction
+        .run(() => super.authentication(context, formKey));
   }
 
   final _$userModelSaveAndReadWithTestsAsyncAction =
@@ -93,10 +172,65 @@ mixin _$AuthViewModel on _AuthViewModelBase, Store {
         .run(() => super.isUserModelEmptyMethod(_userModel));
   }
 
+  final _$_AuthViewModelBaseActionController =
+      ActionController(name: '_AuthViewModelBase');
+
+  @override
+  void changePasswordVisibility() {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+      name: '_AuthViewModelBase.changePasswordVisibility',
+    );
+    try {
+      return super.changePasswordVisibility();
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onEmailChanged(String value) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+      name: '_AuthViewModelBase.onEmailChanged',
+    );
+    try {
+      return super.onEmailChanged(value);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onNameChanged(String value) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+      name: '_AuthViewModelBase.onNameChanged',
+    );
+    try {
+      return super.onNameChanged(value);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onPassChange(String value) {
+    final _$actionInfo = _$_AuthViewModelBaseActionController.startAction(
+      name: '_AuthViewModelBase.onPassChange',
+    );
+    try {
+      return super.onPassChange(value);
+    } finally {
+      _$_AuthViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 userModel: ${userModel},
+email: ${email},
+password: ${password},
+name: ${name},
+isPasswordVisible: ${isPasswordVisible},
 viewState: ${viewState}
     ''';
   }

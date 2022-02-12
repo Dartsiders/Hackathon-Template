@@ -3,7 +3,6 @@ import 'package:hackathontemplate/core/services/sign/firebase_sign_service.dart'
 import 'package:hackathontemplate/core/services/sign/social/firebase_social_service.dart';
 import 'package:hackathontemplate/core/services/storage/firebase_storage_service.dart';
 import 'package:hackathontemplate/feature/auth/view_model/auth_view_model.dart';
-import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contacts_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/courses/view_model/courses_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/view_model/main_view_model.dart';
@@ -27,7 +26,7 @@ void setupLocator() {
   locator.registerLazySingleton(() => AccidentViewModel());
   locator.registerLazySingleton(() => ContactsViewModel());
   locator.registerLazySingleton(() => SettingsViewModel());
-  
+
   locator.registerLazySingleton(() => FirebaseDatabaseService());
   locator.registerLazySingleton(() => FirebaseSocialService());
   locator.registerLazySingleton(() => FirebaseSignService());

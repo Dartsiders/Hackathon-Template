@@ -26,6 +26,9 @@ dependencies:
 
   # Utilities
   image_picker: ^0.8.4+8
+  flutter_svg: ^1.0.0
+  fluttertoast: ^8.0.8
+  lottie: ^1.2.1
 
   # Firebase
   firebase_core: ^1.10.6
@@ -71,12 +74,13 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/
 
 flutter_native_splash:
   color: "#42a5f5"
-
-  assets:
-    - assets/
 #flutter_icons:
 #  android: "launcher_icon"
 #  ios: true

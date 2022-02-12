@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hackathontemplate/core/services/database/firebase_database_service.dart';
 import 'package:hackathontemplate/core/services/sign/firebase_sign_service.dart';
 import 'package:hackathontemplate/core/services/sign/social/firebase_social_service.dart';
@@ -20,16 +23,79 @@ abstract class _AuthViewModelBase with Store {
   final FirebaseSocialService _firebaseSocialService =
       locator<FirebaseSocialService>();
 
+  final FirebaseSignService _firebaseSignService =
+      locator<FirebaseSignService>();
+
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
 
   @observable
   UserModel userModel = UserModel();
 
   @observable
+  String? email;
+
+  @observable
+  String? password;
+
+  @observable
+  String? name;
+
+  @observable
+  bool isPasswordVisible = false;
+
+  @observable
   ViewState viewState = ViewState.idle;
 
   //@observable
   //bool isUserAlreadyCreated = false;
+
+  @action
+  void changePasswordVisibility() {
+    isPasswordVisible = !isPasswordVisible;
+  }
+
+  @action
+  Future createAccount(BuildContext context) async {
+    final bool valid = await _firebaseSignService.uniqUserCheck(email!);
+    if (!valid) {
+      Fluttertoast.showToast(msg: "Mail Adresi Sistemde Kayıtlı");
+    } else {
+      try {
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email!, password: password!);
+
+        final document =
+            FirebaseFirestore.instance.collection("users").doc(email);
+        await document.set({
+          "id": document.id,
+          "name": name,
+          "email": email,
+          "password": password,
+        }).then((value) => Navigator.pushNamed(context, "/verification"));
+      } on FirebaseAuthException catch (error) {
+        Fluttertoast.showToast(
+          msg: error.message ?? "Hatalı Giriş Denemesi",
+          gravity: ToastGravity.CENTER,
+          textColor: Colors.red,
+        );
+      }
+    }
+  }
+
+  @action
+  void onEmailChanged(String value) {
+    email = value;
+  }
+
+  @action
+  void onNameChanged(String value) {
+    name = value;
+  }
+
+  @action
+  void onPassChange(String value) {
+    password = value;
+  }
 
   @action
   Future<void> signInWithGoogle(BuildContext context) async {
@@ -57,6 +123,30 @@ abstract class _AuthViewModelBase with Store {
   }
 
   @action
+  Future authentication(
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+  ) async {
+    if (formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email!, password: password!);
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          "/home",
+          (route) => false,
+        );
+      } on FirebaseAuthException catch (error) {
+        Fluttertoast.showToast(
+          msg: error.message ?? "Hatalı Giriş Denemesi",
+          gravity: ToastGravity.CENTER,
+          textColor: Colors.red,
+        );
+      }
+    }
+  }
+
+  @action
   Future<UserModel> userModelSaveAndReadWithTests(UserModel _userModel) async {
     try {
       if (!await isUserModelEmptyMethod(_userModel)) {
@@ -79,7 +169,8 @@ abstract class _AuthViewModelBase with Store {
       }
     } catch (e) {
       print(
-          "UserAuthenticationViewModel userModelSaveAndReadWithTests hata yakaladı $e");
+        "UserAuthenticationViewModel userModelSaveAndReadWithTests hata yakaladı $e",
+      );
       return UserModel();
     }
   }
@@ -114,7 +205,8 @@ abstract class _AuthViewModelBase with Store {
           .userControlDatabase(_userModel.userId);
     } catch (e) {
       print(
-          "UserAuthenticationViewModel isUserAlreadyExistMethod hata yakaladı $e");
+        "UserAuthenticationViewModel isUserAlreadyExistMethod hata yakaladı $e",
+      );
       return false;
     }
   }
