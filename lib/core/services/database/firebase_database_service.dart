@@ -52,7 +52,7 @@ class FirebaseDatabaseService implements DatabaseService {
       EmergencyContactModel emergencyContactModel) async {
     await _firebaseFirestore
         .collection("users")
-        .doc(userModel.userId)
+        .doc("userId")
         .collection("emergencyContacts")
         .doc("emergencyContactId")
         .set(emergencyContactModel.toJson());
