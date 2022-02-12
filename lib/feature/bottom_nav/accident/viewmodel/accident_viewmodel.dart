@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:hackathontemplate/core/services/location/location_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/models/emergency/emergency_model.dart';
@@ -56,8 +55,9 @@ abstract class _AccidentViewModelBase with Store {
     await _databaseService.addEmergency(
       EmergencyModel(
         emergencyDetail: description,
-        emergencyLocationLatitude: currentLocation!.latitude.toString(),
-        emergencyLocationLongitude: currentLocation!.longitude.toString(),
+        emergencyLocationLatitude: currentLocation!.latitude.toStringAsFixed(1),
+        emergencyLocationLongitude:
+            currentLocation!.longitude.toStringAsFixed(1),
         emergencyPhotoUrl: await _storageService.emergencyPictureSaveStorage(
           EmergencyModel(
             emergencyId: Random().nextInt(999999).toString(),
@@ -68,7 +68,5 @@ abstract class _AccidentViewModelBase with Store {
         emergencyTime: DateTime.now(),
       ),
     );
-    print(currentLocation!.latitude);
-    print(DateFormat('dd/MM/yyyy HH:mm').format(DateTime.now()));
   }
 }
