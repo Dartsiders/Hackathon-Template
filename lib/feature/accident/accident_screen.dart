@@ -19,6 +19,7 @@ class AccidentScreen extends StatefulWidget {
 class _AccidentScreenState extends State<AccidentScreen> {
   final InitViewModel _initViewModel = locator<InitViewModel>();
   final AccidentViewModel _accidentViewModel = locator<AccidentViewModel>();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -81,13 +82,28 @@ class _AccidentScreenState extends State<AccidentScreen> {
                   ),
                 ),
                 AppSize.mediumHeightSizedBox,
+                SizedBox(
+                  width: double.infinity,
+                  child: TextField(
+                    controller: _descriptionController,
+                    maxLines: 8,
+                    decoration: InputDecoration(
+                      hintText: 'Kaza Hakkında Kısa Bilgi...',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15.r),
+                      ),
+                    ),
+                  ),
+                ),
                 const AccidentDescriptionField(),
                 AppSize.mediumHeightSizedBox,
                 SizedBox(
                   height: 70.h,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      _accidentViewModel.getCurrentLocation();
+                      _accidentViewModel
+                           .reportEmergency(_descriptionController.text);
+                      
                     },
                     icon: Icon(
                       Icons.report_gmailerrorred,
