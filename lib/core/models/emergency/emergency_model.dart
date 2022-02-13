@@ -14,6 +14,10 @@ class EmergencyModel {
   String? emergencyStatus;
   @JsonKey(fromJson: getDateFromTimeStamp, toJson: getTimeStampFromDate)
   DateTime? emergencyTime;
+  String? emergencyUserId;
+  String? emergencyUserName;
+
+
   EmergencyModel({
     this.emergencyId,
     this.emergencyDetail,

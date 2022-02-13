@@ -60,6 +60,20 @@ mixin _$MainViewModel on _MainViewModelBase, Store {
     });
   }
 
+  final _$_MainViewModelBaseActionController =
+      ActionController(name: '_MainViewModelBase');
+
+  @override
+  String autoStatus() {
+    final _$actionInfo = _$_MainViewModelBaseActionController.startAction(
+        name: '_MainViewModelBase.autoStatus');
+    try {
+      return super.autoStatus();
+    } finally {
+      _$_MainViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

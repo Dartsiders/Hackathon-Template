@@ -7,11 +7,13 @@ import 'package:hackathontemplate/feature/auth/view_model/auth_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contacts_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/view_model/main_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/settings/view_model/settings_view_model.dart';
+import 'package:hackathontemplate/feature/notification/view_model/notification_view_model.dart';
 
 import '../../feature/bottom_nav/accident/viewmodel/accident_viewmodel.dart';
 import '../../feature/home/view_model/home_view_model.dart';
 import '../../feature/init/view_model/init_view_model.dart';
 import '../services/database/firebase_database_service.dart';
+import '../services/notification/local_notification_service.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -25,9 +27,17 @@ void setupLocator() {
   locator.registerLazySingleton(() => AccidentViewModel());
   locator.registerLazySingleton(() => ContactsViewModel());
   locator.registerLazySingleton(() => SettingsViewModel());
+  locator.registerLazySingleton(() => NotificationViewModel());
+
+
   locator.registerLazySingleton(() => LocationService());
   locator.registerLazySingleton(() => FirebaseDatabaseService());
   locator.registerLazySingleton(() => FirebaseSocialService());
   locator.registerLazySingleton(() => FirebaseSignService());
   locator.registerLazySingleton(() => FirebaseStorageService());
+
+  locator.registerLazySingleton(() => LocationService());
+
+  locator.registerLazySingleton(() => LocalNotificationService());
+
 }
