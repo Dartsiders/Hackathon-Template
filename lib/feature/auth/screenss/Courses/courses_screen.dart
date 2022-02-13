@@ -1,6 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+import '../CoursesDetail/courses_detail_screen.dart';
 //import '../view_model/home_view_model.dart';
 
 //import '../../../core/locator/locator.dart';
@@ -29,6 +29,7 @@ class CoursesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
         children: const <Widget>[
           CourseCard(),
@@ -50,7 +51,12 @@ class CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (() => {}),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CoursesDetailScreen()),
+        );
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
@@ -71,22 +77,6 @@ class CourseCard extends StatelessWidget {
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: 20,
-                  right: 10,
-                  child: Container(
-                    width: 300,
-                    color: Colors.black54,
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 8,
-                    ),
-                    child: const Icon(
-                      Icons.lock,
-                      size: 40,
-                    ),
                   ),
                 ),
               ],

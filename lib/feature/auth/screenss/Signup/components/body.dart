@@ -80,7 +80,9 @@ class Body extends StatelessWidget {
               children: <Widget>[
                 SocalIcon(
                   iconSrc: "assets/icons/google-plus.svg",
-                  press: () {},
+                  press: () {
+                    _authViewModel.signInWithGoogle(context);
+                  },
                 ),
               ],
             )

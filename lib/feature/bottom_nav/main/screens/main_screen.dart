@@ -12,6 +12,7 @@ import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contact
 import 'package:hackathontemplate/feature/bottom_nav/courses/screens/lesson_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/courses/screens/quiz1_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_avatar_widget.dart';
+import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_three.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/header_bottom_button_widget.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/view_model/main_view_model.dart';
 import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
@@ -364,7 +365,7 @@ class _MainScreenState extends State<MainScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Trend Eğitimler', style: AppTheme.textStyle.headline6),
+              Text('Günün Sözleri', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
                   _homeViewModel.homeTabController.jumpToTab(1);
@@ -442,6 +443,69 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class contacts_add extends StatelessWidget {
+  const contacts_add({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () {
+          Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ContactsScreen()));
+      },
+      icon: const Icon(Icons.add),
+      label: const Text('Kişi Ekle'),
+    );
+  }
+}
+
+class crouselSliders extends StatefulWidget {
+  const crouselSliders({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<crouselSliders> createState() => _crouselSlidersState();
+}
+
+class _crouselSlidersState extends State<crouselSliders> {
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(height: 75.0, autoPlay: true),
+      items: [
+        "İlk yardım ile hayata tutunun.",
+        "İlk yardım hayat kurtarır.",
+        "İlk yardım sosyal sorumluluktur.",
+        "Trafik dikkat ister, azami gayret göster.",
+        " Doğru ilk yardım yaşatır."
+      ].map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: const BoxDecoration(
+                  //color: Colors.amber,
+                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Colors.purple, Colors.blue])),
+                child: Center(child: Text("$i",style: TextStyle(color: Colors.white),)),
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }
