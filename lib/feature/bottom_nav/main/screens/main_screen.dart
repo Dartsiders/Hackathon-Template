@@ -5,7 +5,10 @@ import 'package:group_button/group_button.dart';
 import 'package:hackathontemplate/core/app/duration/app_duration.dart';
 import 'package:hackathontemplate/core/app/size/app_size.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
+import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_avatar_two.widget.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_avatar_widget.dart';
+import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_three.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/header_bottom_button_widget.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/view_model/main_view_model.dart';
 import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
@@ -222,23 +225,19 @@ class MainScreen extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.centerLeft,
                   children: [
-                    ContactAvatarWidget(),
+                    Contactthree(),
                     Padding(
                       padding: const EdgeInsets.only(left: 24.0),
                       child: ContactAvatarWidget(),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 58.0),
-                      child: ContactAvatarWidget(),
+                      child: ContacttwoWidget(),
                     )
                   ],
                 ),
               ),
-              ElevatedButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.add),
-                label: const Text('Kişi Ekle'),
-              ),
+              contacts_add(),
               /*  InkWell(
                 onTap: () {},
                 child: Container(
@@ -282,7 +281,7 @@ class MainScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Trend Eğitimler', style: AppTheme.textStyle.headline6),
+              Text('Günün Sözleri', style: AppTheme.textStyle.headline6),
               TextButton(
                 onPressed: () {
                   _homeViewModel.homeTabController.jumpToTab(1);
@@ -293,30 +292,72 @@ class MainScreen extends StatelessWidget {
             ],
           ),
           AppSize.lowHeightSizedBox,
-          CarouselSlider(
-            options: CarouselOptions(height: 75.0, autoPlay: true),
-            items: [1, 2, 3, 4, 5].map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.amber,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'text $i',
-                        style: const TextStyle(fontSize: 16.0),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-          ),
+          crouselSliders(),
         ],
       ),
+    );
+  }
+}
+
+class contacts_add extends StatelessWidget {
+  const contacts_add({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () {
+          Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => ContactsScreen()));
+      },
+      icon: const Icon(Icons.add),
+      label: const Text('Kişi Ekle'),
+    );
+  }
+}
+
+class crouselSliders extends StatefulWidget {
+  const crouselSliders({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<crouselSliders> createState() => _crouselSlidersState();
+}
+
+class _crouselSlidersState extends State<crouselSliders> {
+  @override
+  Widget build(BuildContext context) {
+    return CarouselSlider(
+      options: CarouselOptions(height: 75.0, autoPlay: true),
+      items: [
+        "İlk yardım ile hayata tutunun.",
+        "İlk yardım hayat kurtarır.",
+        "İlk yardım sosyal sorumluluktur.",
+        "Trafik dikkat ister, azami gayret göster.",
+        " Doğru ilk yardım yaşatır."
+      ].map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: const EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: const BoxDecoration(
+                  //color: Colors.amber,
+                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [Colors.purple, Colors.blue])),
+                child: Center(child: Text("$i",style: TextStyle(color: Colors.white),)),
+              ),
+            );
+          },
+        );
+      }).toList(),
     );
   }
 }
