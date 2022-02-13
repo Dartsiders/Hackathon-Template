@@ -5,12 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
 import 'package:hackathontemplate/feature/bottom_nav/accident/accident_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
-import 'package:hackathontemplate/feature/bottom_nav/courses/screens/courses_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/screens/main_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/settings/screens/settings_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../../core/locator/locator.dart';
+import '../../auth/screenss/Courses/courses_screen.dart';
 import '../view_model/home_view_model.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
   List<Widget> _buildScreens() {
     return [
       MainScreen(),
-      CoursesScreen(),
+      const CoursesScreen(),
       const ReportEmergency(),
       ContactsScreen(),
       const SettingsScreen()

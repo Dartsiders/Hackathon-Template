@@ -1,24 +1,20 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hackathontemplate/core/locator/locator.dart';
 import 'package:hackathontemplate/core/services/location/location_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../../core/models/emergency/emergency_model.dart';
-import '../../../../core/services/database/firebase_database_service.dart';
-
 part 'accident_viewmodel.g.dart';
 
 class AccidentViewModel = _AccidentViewModelBase with _$AccidentViewModel;
 
 abstract class _AccidentViewModelBase with Store {
-  final LocationService _locationService = LocationService();
-
-  final FirebaseDatabaseService _databaseService =
-      locator<FirebaseDatabaseService>();
+  final LocationService _locationService = locator.get<LocationService>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @observable
   File? imageFile;
@@ -49,16 +45,48 @@ abstract class _AccidentViewModelBase with Store {
         );
   }
 
+  Future<bool> checkSameLocation() async {
+    final resultLatitude = await FirebaseFirestore.instance
+        .collection("emergency")
+        .where(
+          "emergencyLocationLatitude",
+          isEqualTo: currentLocation!.latitude,
+        )
+        .get();
+    final resultLongitude = await FirebaseFirestore.instance
+        .collection("emergency")
+        .where(
+          "emergencyLocationLongitude",
+          isEqualTo: currentLocation!.longitude,
+        )
+        .get();
+    return resultLatitude.docs.isEmpty && resultLongitude.docs.isEmpty;
+  }
+
   @action
   Future<void> reportEmergency() async {
     currentLocation = await _locationService.getCurrentPosition();
-    await _databaseService.addEmergency(
-      EmergencyModel(
-        emergencyLocationLatitude: currentLocation!.latitude.toStringAsFixed(1),
-        emergencyLocationLongitude:
+
+    final bool valid = await checkSameLocation();
+    if (!valid) {
+      Fluttertoast.showToast(
+        msg: "Acil Durum Çoktan Belirtildi Dikkatiniz İçin Teşekkürler",
+      );
+    } else {
+      final document = _firestore.collection("emergency").doc(
+            currentLocation!.latitude.toString() +
+                currentLocation!.longitude.toString(),
+          );
+      document.set({
+        "emergencyId": document.id,
+        "emergencyTime": Timestamp.now().toDate(),
+        "emergencyStatus": "Active",
+        "emergencyLocationLatitude":
+            currentLocation!.latitude.toStringAsFixed(1),
+        "emergencyLocationLongitude":
             currentLocation!.longitude.toStringAsFixed(1),
-      ),
-    );
+      });
+    }
   }
 
   @action
@@ -71,6 +99,9 @@ abstract class _AccidentViewModelBase with Store {
               currentLocation!.longitude.toString(),
         )
         .update({
+      "emergencyLocationLatitude": currentLocation!.latitude.toStringAsFixed(1),
+      "emergencyLocationLongitude":
+          currentLocation!.longitude.toStringAsFixed(1),
       "fire": fire,
       "peopleCount": peopleCount,
       "consciousness": consciousness,

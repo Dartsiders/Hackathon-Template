@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hackathontemplate/feature/bottom_nav/accident/accident_screen.dart';
-import 'package:hackathontemplate/feature/bottom_nav/courses/screens/courses_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/screens/main_screen.dart';
 import 'package:hackathontemplate/feature/init/screens/init_screen.dart';
 
+import '../../feature/auth/screenss/Courses/courses_screen.dart';
 import '../../feature/auth/screenss/Welcome/welcome_screen.dart';
 import '../../feature/auth/screenss/verification/verification_screen.dart';
 import '../../feature/bottom_nav/contacts/screens/contacts_screen.dart';
@@ -29,7 +29,7 @@ class Routes {
     init: (BuildContext context) => InitScreen(),
     auth: (BuildContext context) => WelcomeScreen(),
     main: (BuildContext context) => MainScreen(),
-    courses: (BuildContext context) => CoursesScreen(),
+    courses: (BuildContext context) => const CoursesScreen(),
     accident: (BuildContext context) => const ReportEmergency(),
     contacts: (BuildContext context) => ContactsScreen(),
     settings: (BuildContext context) => const SettingsScreen(),
