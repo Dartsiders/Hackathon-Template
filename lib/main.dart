@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,7 +43,9 @@ class _MyAppState extends State<MyApp> {
               _initViewModel.isDarkModel ? ThemeMode.dark : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           title: "Hackathon Template",
-          initialRoute: Routes.auth,
+          initialRoute: FirebaseAuth.instance.currentUser != null
+              ? Routes.home
+              : Routes.auth,
           routes: Routes.routes,
         ),
       ),

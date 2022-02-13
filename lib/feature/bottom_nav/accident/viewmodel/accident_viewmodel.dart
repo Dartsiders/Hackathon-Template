@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'dart:math';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hackathontemplate/core/locator/locator.dart';
 import 'package:hackathontemplate/core/services/location/location_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/models/emergency/emergency_model.dart';
 import '../../../../core/services/database/firebase_database_service.dart';
-import '../../../../core/services/storage/firebase_storage_service.dart';
 
 part 'accident_viewmodel.g.dart';
 
@@ -17,8 +17,8 @@ class AccidentViewModel = _AccidentViewModelBase with _$AccidentViewModel;
 abstract class _AccidentViewModelBase with Store {
   final LocationService _locationService = LocationService();
 
-  final FirebaseStorageService _storageService = FirebaseStorageService();
-  final FirebaseDatabaseService _databaseService = FirebaseDatabaseService();
+  final FirebaseDatabaseService _databaseService =
+      locator<FirebaseDatabaseService>();
 
   @observable
   File? imageFile;
@@ -50,23 +50,31 @@ abstract class _AccidentViewModelBase with Store {
   }
 
   @action
-  Future<void> reportEmergency(String description) async {
+  Future<void> reportEmergency() async {
     currentLocation = await _locationService.getCurrentPosition();
     await _databaseService.addEmergency(
       EmergencyModel(
-        emergencyDetail: description,
         emergencyLocationLatitude: currentLocation!.latitude.toStringAsFixed(1),
         emergencyLocationLongitude:
             currentLocation!.longitude.toStringAsFixed(1),
-        emergencyPhotoUrl: await _storageService.emergencyPictureSaveStorage(
-          EmergencyModel(
-            emergencyId: Random().nextInt(999999).toString(),
-          ),
-          imageFile!,
-        ),
-        emergencyStatus: "active",
-        emergencyTime: DateTime.now(),
       ),
     );
+  }
+
+  @action
+  Future<void> updateEmergency(String? fire, String? peopleCount,
+      String? consciousness, String? bleeding) async {
+    FirebaseFirestore.instance
+        .collection("emergency")
+        .doc(
+          currentLocation!.latitude.toString() +
+              currentLocation!.longitude.toString(),
+        )
+        .update({
+      "fire": fire,
+      "peopleCount": peopleCount,
+      "consciousness": consciousness,
+      "bleeding": bleeding,
+    });
   }
 }

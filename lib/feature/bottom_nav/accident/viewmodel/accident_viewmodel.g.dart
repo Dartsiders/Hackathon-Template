@@ -83,9 +83,18 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
       AsyncAction('_AccidentViewModelBase.reportEmergency');
 
   @override
-  Future<void> reportEmergency(String description) {
-    return _$reportEmergencyAsyncAction
-        .run(() => super.reportEmergency(description));
+  Future<void> reportEmergency() {
+    return _$reportEmergencyAsyncAction.run(() => super.reportEmergency());
+  }
+
+  final _$updateEmergencyAsyncAction =
+      AsyncAction('_AccidentViewModelBase.updateEmergency');
+
+  @override
+  Future<void> updateEmergency(String? fire, String? peopleCount,
+      String? consciousness, String? bleeding) {
+    return _$updateEmergencyAsyncAction.run(() =>
+        super.updateEmergency(fire, peopleCount, consciousness, bleeding));
   }
 
   @override
