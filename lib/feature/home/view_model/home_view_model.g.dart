@@ -70,13 +70,111 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
+  final _$velocityFromSensorsAtom =
+      Atom(name: '_HomeViewModelBase.velocityFromSensors');
+
+  @override
+  int get velocityFromSensors {
+    _$velocityFromSensorsAtom.reportRead();
+    return super.velocityFromSensors;
+  }
+
+  @override
+  set velocityFromSensors(int value) {
+    _$velocityFromSensorsAtom.reportWrite(value, super.velocityFromSensors, () {
+      super.velocityFromSensors = value;
+    });
+  }
+
+  final _$velocityListAtom = Atom(name: '_HomeViewModelBase.velocityList');
+
+  @override
+  ObservableList<int?>? get velocityList {
+    _$velocityListAtom.reportRead();
+    return super.velocityList;
+  }
+
+  @override
+  set velocityList(ObservableList<int?>? value) {
+    _$velocityListAtom.reportWrite(value, super.velocityList, () {
+      super.velocityList = value;
+    });
+  }
+
+  final _$isStatusEmergencyAtom =
+      Atom(name: '_HomeViewModelBase.isStatusEmergency');
+
+  @override
+  bool get isStatusEmergency {
+    _$isStatusEmergencyAtom.reportRead();
+    return super.isStatusEmergency;
+  }
+
+  @override
+  set isStatusEmergency(bool value) {
+    _$isStatusEmergencyAtom.reportWrite(value, super.isStatusEmergency, () {
+      super.isStatusEmergency = value;
+    });
+  }
+
+  final _$autoEmergencyModelAtom =
+      Atom(name: '_HomeViewModelBase.autoEmergencyModel');
+
+  @override
+  AutoEmergencyModel? get autoEmergencyModel {
+    _$autoEmergencyModelAtom.reportRead();
+    return super.autoEmergencyModel;
+  }
+
+  @override
+  set autoEmergencyModel(AutoEmergencyModel? value) {
+    _$autoEmergencyModelAtom.reportWrite(value, super.autoEmergencyModel, () {
+      super.autoEmergencyModel = value;
+    });
+  }
+
+  final _$getCurrentPositionFromGPSAsyncAction =
+      AsyncAction('_HomeViewModelBase.getCurrentPositionFromGPS');
+
+  @override
+  Future getCurrentPositionFromGPS() {
+    return _$getCurrentPositionFromGPSAsyncAction
+        .run(() => super.getCurrentPositionFromGPS());
+  }
+
+  final _$saveAutoEmergencyAsyncAction =
+      AsyncAction('_HomeViewModelBase.saveAutoEmergency');
+
+  @override
+  Future<void> saveAutoEmergency() {
+    return _$saveAutoEmergencyAsyncAction.run(() => super.saveAutoEmergency());
+  }
+
+  final _$_HomeViewModelBaseActionController =
+      ActionController(name: '_HomeViewModelBase');
+
+  @override
+  dynamic listenVelocityFromSensors() {
+    final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
+        name: '_HomeViewModelBase.listenVelocityFromSensors');
+    try {
+      return super.listenVelocityFromSensors();
+    } finally {
+      _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 viewState: ${viewState},
 userModel: ${userModel},
 homeTabController: ${homeTabController},
-isTabHide: ${isTabHide}
+isTabHide: ${isTabHide},
+velocityFromSensors: ${velocityFromSensors},
+velocityList: ${velocityList},
+isStatusEmergency: ${isStatusEmergency},
+autoEmergencyModel: ${autoEmergencyModel}
     ''';
   }
 }

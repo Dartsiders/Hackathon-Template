@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hackathontemplate/core/models/auto_emergency/auto_emergency_model.dart';
 import 'package:hackathontemplate/core/models/emergency/emergency_model.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
 
@@ -46,7 +47,7 @@ class FirebaseDatabaseService implements DatabaseService {
       }
     });
   }
-  
+
   Future<bool> checkSameLocation(EmergencyModel emergencyModel) async {
     final resultLatitude = await FirebaseFirestore.instance
         .collection("emergency")
@@ -64,7 +65,6 @@ class FirebaseDatabaseService implements DatabaseService {
         .get();
     return resultLatitude.docs.isEmpty && resultLongitude.docs.isEmpty;
   }
-
 
   @override
   Future<void> saveEmergencyContact(
@@ -94,7 +94,6 @@ class FirebaseDatabaseService implements DatabaseService {
 
   @override
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
-
     final bool valid = await checkSameLocation(emergencyModel);
     if (!valid) {
       Fluttertoast.showToast(
@@ -106,6 +105,35 @@ class FirebaseDatabaseService implements DatabaseService {
       emergencyModel.emergencyTime = Timestamp.now().toDate();
       document.set(emergencyModel.toJson());
     }
+  }
 
+  @override
+  Future<void> saveAutoEmergency(
+      UserModel userModel, AutoEmergencyModel autoEmergencyModel) async {
+    var documentRef = await _firebaseFirestore.collection("autoemergency").doc();
+    autoEmergencyModel.autoEmergencyId = documentRef.id;
+    autoEmergencyModel.autoEmergencyTime = Timestamp.now().toDate();
+    documentRef.set(autoEmergencyModel.toJson());
+
+    var documentRef1 = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("autoemergency")
+        .doc(autoEmergencyModel.autoEmergencyId);
+    documentRef.set(autoEmergencyModel.toJson());
+  }
+
+   @override
+  Future<List<AutoEmergencyModel>> getUserEmergency(
+      UserModel userModel) async {
+     var autoEmergencyList = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("autoemergency")
+        .get()
+        .then((value) => value.docs.map((doc) {
+              return AutoEmergencyModel.fromJson(doc.data());
+            }).toList());
+    return autoEmergencyList;
   }
 }

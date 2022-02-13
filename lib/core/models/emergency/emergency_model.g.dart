@@ -16,7 +16,9 @@ EmergencyModel _$EmergencyModelFromJson(Map<String, dynamic> json) {
     emergencyTime: getDateFromTimeStamp(json['emergencyTime'] as Timestamp?),
     emergencyPhotoUrl: json['emergencyPhotoUrl'] as String?,
     emergencyStatus: json['emergencyStatus'] as String?,
-  );
+  )
+    ..emergencyUserId = json['emergencyUserId'] as String?
+    ..emergencyUserName = json['emergencyUserName'] as String?;
 }
 
 Map<String, dynamic> _$EmergencyModelToJson(EmergencyModel instance) =>
@@ -29,4 +31,6 @@ Map<String, dynamic> _$EmergencyModelToJson(EmergencyModel instance) =>
       'emergencyPhotoUrl': instance.emergencyPhotoUrl,
       'emergencyStatus': instance.emergencyStatus,
       'emergencyTime': getTimeStampFromDate(instance.emergencyTime),
+      'emergencyUserId': instance.emergencyUserId,
+      'emergencyUserName': instance.emergencyUserName,
     };

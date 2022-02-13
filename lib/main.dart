@@ -6,12 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'core/locator/locator.dart';
 import 'core/routes/routes.dart';
+import 'core/services/notification/local_notification_service.dart';
 import 'feature/init/view_model/init_view_model.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  await LocalNotificationService.init(); //
+  LocalNotificationService().requestIOSPermissions();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -42,13 +46,12 @@ class _MyAppState extends State<MyApp> {
               _initViewModel.isDarkModel ? ThemeMode.dark : ThemeMode.light,
           debugShowCheckedModeBanner: false,
           title: "Hackathon Template",
-          initialRoute: Routes.auth,
+          initialRoute: Routes.home,
           routes: Routes.routes,
         ),
       ),
     );
   }
 }
-
 
 ///bu bir deneme yorumudur.

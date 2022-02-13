@@ -1,20 +1,44 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:group_button/group_button.dart';
 import 'package:hackathontemplate/core/app/duration/app_duration.dart';
 import 'package:hackathontemplate/core/app/size/app_size.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
+import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contacts_view_model.dart';
+import 'package:hackathontemplate/feature/bottom_nav/courses/screens/lesson_screen.dart';
+import 'package:hackathontemplate/feature/bottom_nav/courses/screens/quiz1_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/contact_avatar_widget.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/components/header_bottom_button_widget.dart';
 import 'package:hackathontemplate/feature/bottom_nav/main/view_model/main_view_model.dart';
 import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
+import 'package:hackathontemplate/feature/notification/screens/notification_screen.dart';
+import 'package:mobx/mobx.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../../../core/locator/locator.dart';
+import '../../../../core/services/notification/local_notification_service.dart';
+import '../../contacts/components/add_contact_sheet_widget.dart';
 
-class MainScreen extends StatelessWidget {
+class MainScreen extends StatefulWidget {
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
   final MainViewModel _mainViewModel = locator<MainViewModel>();
+
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
+
+  final ContactsViewModel _contactsViewModel = locator<ContactsViewModel>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,11 +67,10 @@ class MainScreen extends StatelessWidget {
                 child: bodyTopContacts(_homeViewModel),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: bodyBottomEducations(_homeViewModel),
               )
             ],
-
           ),
         ));
       },
@@ -63,15 +86,27 @@ class MainScreen extends StatelessWidget {
           CircleAvatar(
             backgroundColor: AppTheme.theme.primaryColor,
             radius: 24,
+            child: _homeViewModel.userModel?.userPhotoUrl != null
+                ? Image.network(
+                    _homeViewModel.userModel!.userPhotoUrl.toString(),
+                  )
+                : Text(
+                    _homeViewModel.userModel?.userName?.substring(0, 1) ?? "",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
           ),
           //AppSize.lowWidthSizedBox,
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Kullanıcı İsmi', style: AppTheme.textStyle.headline6),
+              Text(_homeViewModel.userModel?.userName ?? "İsim Soyisim",
+                  style: AppTheme.textStyle.headline6),
               const SizedBox(height: 8),
-              Text('Günaydın', style: AppTheme.textStyle.caption),
+              Text('Gününüz güzel geçsin.', style: AppTheme.textStyle.caption),
             ],
           ),
           AppSize.highWidthSizedBox,
@@ -81,7 +116,14 @@ class MainScreen extends StatelessWidget {
             child: IconButton(
               color: Colors.black.withOpacity(0.7),
               icon: const Icon(Icons.notifications_outlined),
-              onPressed: () {},
+              onPressed: () {
+                pushNewScreen(
+                  context,
+                  screen: NotificationScreen(),
+                  withNavBar: false, // OPTIONAL VALUE. True by default.
+                  pageTransitionAnimation: PageTransitionAnimation.cupertino,
+                );
+              },
             ),
           )
         ],
@@ -109,11 +151,11 @@ class MainScreen extends StatelessWidget {
                 groupingType: GroupingType.row,
                 elevation: 0,
                 buttonHeight: 50,
-                buttonWidth: 100,
+                buttonWidth: 105,
                 direction: Axis.horizontal,
                 buttons: const [
                   "Araç Hızı",
-                  "Rasgele Tab",
+                  "Tehlike Durumu",
                 ],
 
                 selectedTextStyle: AppTheme.textStyle.bodyMedium?.copyWith(
@@ -143,7 +185,7 @@ class MainScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '0.0',
+                      _homeViewModel.velocityFromSensors.toString(),
                       style: AppTheme.textStyle.headline3?.copyWith(
                         color: Colors.black87,
                         fontWeight: FontWeight.bold,
@@ -161,15 +203,21 @@ class MainScreen extends StatelessWidget {
                   ],
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: null,
                   child: Text(
-                    'Stabil',
+                    _mainViewModel.autoStatus(),
                     style: AppTheme.textStyle.headline6,
                   ),
                 ),
               ],
             ),
-            secondChild: const Text("Rasgele Tab Text"),
+            secondChild: Text(
+              _mainViewModel.autoStatus(),
+              style: AppTheme.textStyle.headline4?.copyWith(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             crossFadeState: _mainViewModel.mainGroupButtonSelectedIndex.isEven
                 ? CrossFadeState.showFirst
                 : CrossFadeState.showSecond,
@@ -215,27 +263,61 @@ class MainScreen extends StatelessWidget {
           ),
           AppSize.lowHeightSizedBox,
           Row(
+            /*mainAxisAlignment: _contactsViewModel.emergencyContactList.isEmpty
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,*/
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(
-                width: 110,
-                child: Stack(
-                  alignment: Alignment.centerLeft,
-                  children: [
-                    ContactAvatarWidget(),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24.0),
-                      child: ContactAvatarWidget(),
+              _contactsViewModel.emergencyContactList.isEmpty
+                  ? Text("Kişi Bulunamadı", style: AppTheme.textStyle.headline6)
+                  : SizedBox(
+                      width: 110,
+                      child: Stack(
+                        alignment: Alignment.centerLeft,
+                        children: [
+                          _contactsViewModel.emergencyContactList.length > 0
+                              ? ContactAvatarWidget(
+                                  index: 0,
+                                )
+                              : SizedBox(),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 24.0),
+                            child:
+                                _contactsViewModel.emergencyContactList.length >
+                                        1
+                                    ? ContactAvatarWidget(
+                                        index: 1,
+                                      )
+                                    : SizedBox(),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 58.0),
+                            child:
+                                _contactsViewModel.emergencyContactList.length >
+                                        0
+                                    ? ContactAvatarWidget(
+                                        index: 2,
+                                      )
+                                    : SizedBox(),
+                          )
+                        ],
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 58.0),
-                      child: ContactAvatarWidget(),
-                    )
-                  ],
-                ),
-              ),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  _homeViewModel.isTabHide = true;
+                  final a = showModalBottomSheet<void>(
+                    isScrollControlled: true,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.r),
+                    ),
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AddContactSheetWidget();
+                    },
+                  );
+                  a.whenComplete(() => _homeViewModel.isTabHide = false);
+                },
                 icon: const Icon(Icons.add),
                 label: const Text('Kişi Ekle'),
               ),
@@ -294,20 +376,63 @@ class MainScreen extends StatelessWidget {
           ),
           AppSize.lowHeightSizedBox,
           CarouselSlider(
-            options: CarouselOptions(height: 75.0, autoPlay: true),
+            options: CarouselOptions(height: 150.0, autoPlay: true),
             items: [1, 2, 3, 4, 5].map((i) {
               return Builder(
                 builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                    decoration: const BoxDecoration(
-                      color: Colors.amber,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'text $i',
-                        style: const TextStyle(fontSize: 16.0),
+                  return Card(
+                    color: Colors.accents[Random().nextInt(i * 3)]
+                        .withOpacity(0.2),
+                    elevation: 0,
+                    margin: const EdgeInsets.all(10),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Kurs İsmi',
+                            style: AppTheme.theme.textTheme.headline5,
+                          ),
+                          AppSize.lowHeightSizedBox,
+                          Text(
+                            'Kurs Açıklama',
+                            style: AppTheme.theme.textTheme.caption,
+                          ),
+                          AppSize.lowHeightSizedBox,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              OutlinedButton(
+                                  onPressed: () {
+                                    pushNewScreen(
+                                      context,
+                                      screen: QuizScreen1(),
+                                      withNavBar:
+                                          false, // OPTIONAL VALUE. True by default.
+                                      pageTransitionAnimation:
+                                          PageTransitionAnimation.cupertino,
+                                    );
+                                  },
+                                  child: Text("Sınava Gir")),
+                              AppSize.lowWidthSizedBox,
+                              ElevatedButton(
+                                onPressed: () {
+                                  pushNewScreen(
+                                    context,
+                                    screen: LessonScreen(),
+                                    withNavBar:
+                                        false, // OPTIONAL VALUE. True by default.
+                                    pageTransitionAnimation:
+                                        PageTransitionAnimation.cupertino,
+                                  );
+                                },
+                                child: Text("Derse Gir"),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
                   );
