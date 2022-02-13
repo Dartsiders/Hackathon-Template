@@ -4,6 +4,7 @@ import 'package:hackathontemplate/feature/bottom_nav/main/screens/main_screen.da
 import 'package:hackathontemplate/feature/init/screens/init_screen.dart';
 
 import '../../feature/auth/screenss/Courses/courses_screen.dart';
+import '../../feature/auth/screenss/CoursesDetail/courses_detail_screen.dart';
 import '../../feature/auth/screenss/Welcome/welcome_screen.dart';
 import '../../feature/auth/screenss/verification/verification_screen.dart';
 import '../../feature/bottom_nav/contacts/screens/contacts_screen.dart';
@@ -14,7 +15,7 @@ class Routes {
   Routes._();
   static const String init = '/init';
   static const String auth = '/auth';
-
+  static const String courseDetails = '/courseDetails';
   static const String home = '/home';
 
   static const String main = '/main';
@@ -34,5 +35,6 @@ class Routes {
     contacts: (BuildContext context) => ContactsScreen(),
     settings: (BuildContext context) => const SettingsScreen(),
     verification: (BuildContext context) => const VerificationScreen(),
+    courseDetails: (BuildContext context) => const CoursesDetailScreen(),
   };
 }
