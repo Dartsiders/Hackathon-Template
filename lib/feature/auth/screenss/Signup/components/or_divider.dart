@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hackathontemplate/core/app/theme/app_theme.dart';
 
 import '../../../constants.dart';
 
@@ -12,12 +13,12 @@ class OrDivider extends StatelessWidget {
       child: Row(
         children: <Widget>[
           buildDivider(),
-          const Padding(
+          Padding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             child: Text(
               "OR",
               style: TextStyle(
-                color: kPrimaryColor,
+                color: AppTheme.theme.colorScheme.primary,
                 fontWeight: FontWeight.w600,
               ),
             ),

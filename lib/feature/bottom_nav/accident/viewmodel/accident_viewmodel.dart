@@ -85,7 +85,7 @@ abstract class _AccidentViewModelBase with Store {
             currentLocation!.latitude.toStringAsFixed(1),
         "emergencyLocationLongitude":
             currentLocation!.longitude.toStringAsFixed(1),
-      });
+      }).then((value) => print("object"));
     }
   }
 
@@ -106,6 +106,6 @@ abstract class _AccidentViewModelBase with Store {
       "peopleCount": peopleCount,
       "consciousness": consciousness,
       "bleeding": bleeding,
-    });
+    }).then((value) => print("object"));
   }
 }

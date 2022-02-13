@@ -2,8 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hackathontemplate/feature/auth/screenss/Welcome/welcome_screen.dart';
+import 'package:hackathontemplate/feature/home/view_model/home_view_model.dart';
+import 'package:hackathontemplate/feature/init/view_model/init_view_model.dart';
 
+import '../../../../core/locator/locator.dart';
 import 'account_info.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -14,7 +19,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  var _darkMode = false;
+  final InitViewModel _viewModel = locator<InitViewModel>();
+  final HomeViewModel _homeViewModel = locator<HomeViewModel>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +49,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     backgroundColor: Colors.white,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(70.r),
-                      child: Image.asset(
-                        "assets/images/manns.png",
+                      child: Text(
+                        output["name"].toString().substring(0, 1),
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(100),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -67,22 +77,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: EdgeInsets.only(top: 8, left: 32.0.w, right: 32.0.w),
                 child: const Divider(),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 25.0.w, right: 10.0.w),
-                child: ListTile(
-                  leading: const Icon(Icons.dark_mode_outlined),
-                  title: const Text(
-                    'Koyu Tema',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  trailing: CupertinoSwitch(
-                    value: _darkMode,
-                    onChanged: (darkMode) {
-                      setState(() {});
-                      _darkMode = darkMode;
-                    },
-                  ),
-                ),
+              Observer(
+                builder: (_) {
+                  return Padding(
+                    padding: EdgeInsets.only(left: 25.0.w, right: 10.0.w),
+                    child: ListTile(
+                      leading: const Icon(Icons.dark_mode_outlined),
+                      title: const Text(
+                        'Koyu Tema',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      trailing: CupertinoSwitch(
+                        value: !_viewModel.isDarkModel,
+                        onChanged: (darkMode) {
+                          _viewModel.isDarkModel = !_viewModel.isDarkModel;
+                        },
+                      ),
+                    ),
+                  );
+                },
               ),
               InkWell(
                 onTap: () {
@@ -122,7 +135,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               TextButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.pop(context);
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => WelcomeScreen()),
+                    (route) => false,
+                  );
                 },
                 child: const Text("Çıkış Yap"),
               ),

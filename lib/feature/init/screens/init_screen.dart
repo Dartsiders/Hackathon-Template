@@ -17,14 +17,10 @@ class _InitScreenState extends State<InitScreen> {
     final bool isUserExist = await _initViewModel.currentUser();
     //await Future.delayed(Duration(milliseconds: 100));
     if (isUserExist) {
-      setState(() {
-        AppNavigator(context: context).push(route: Routes.home);
-      });
+      AppNavigator(context: context).push(route: Routes.home);
     } else {
       //user yok ise login page e yolla
-      setState(() {
-        AppNavigator(context: context).push(route: Routes.auth);
-      });
+      AppNavigator(context: context).push(route: Routes.auth);
     }
   }
 

@@ -59,7 +59,7 @@ class Courses1Screen extends StatelessWidget {
         body: ListView.builder(
             itemCount: 4,
             itemBuilder: (context, i) => Container(
-                  height: 300,
+                  height: 400,
                   width: double.infinity,
                   child: Card(
                       color: Colors.white,
@@ -71,9 +71,15 @@ class Courses1Screen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Placeholder(
-                              fallbackHeight: 120,
-                              color: Colors.grey,
+                            Container(
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: const Color(0xff7c94b6),
+                                image: const DecorationImage(
+                                  image: AssetImage('assets/images/sekiz.jpg'),
+                                  fit: BoxFit.fitWidth,
+                                ),
+                              ),
                             ),
                             AppSize.lowHeightSizedBox,
                             Text(

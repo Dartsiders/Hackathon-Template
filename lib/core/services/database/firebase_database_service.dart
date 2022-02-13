@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
 
 import '../../models/auto_emergency/auto_emergency_model.dart';
@@ -14,7 +15,7 @@ class FirebaseDatabaseService implements DatabaseService {
   Future<UserModel> userReadDatabase(String? userId) async {
     final UserModel _usrModel = await _firebaseFirestore
         .collection("users")
-        .doc(userId)
+        .doc(FirebaseAuth.instance.currentUser!.email)
         .get()
         .then((value) {
       return UserModel.fromJson(value.data());
@@ -34,7 +35,7 @@ class FirebaseDatabaseService implements DatabaseService {
   Future<bool> userControlDatabase(String? userId) async {
     return _firebaseFirestore
         .collection("users")
-        .doc(userId)
+        .doc(FirebaseAuth.instance.currentUser!.email)
         .get()
         .then((value) {
       if (value.exists) {

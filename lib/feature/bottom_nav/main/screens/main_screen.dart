@@ -57,7 +57,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: headerTopProfile(),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: headerCenterSpeed(),
               ),
               Expanded(
@@ -65,11 +65,11 @@ class _MainScreenState extends State<MainScreen> {
                 child: headerBottomButtons(),
               ),
               Expanded(
-                flex: 2,
+                flex: 3,
                 child: bodyTopContacts(_homeViewModel),
               ),
               Expanded(
-                flex: 3,
+                flex: 4,
                 child: bodyBottomEducations(_homeViewModel),
               )
             ],
@@ -457,8 +457,8 @@ class contacts_add extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: () {
-          Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ContactsScreen()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => ContactsScreen()));
       },
       icon: const Icon(Icons.add),
       label: const Text('Kişi Ekle'),
@@ -501,7 +501,11 @@ class _crouselSlidersState extends State<crouselSliders> {
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                         colors: [Colors.purple, Colors.blue])),
-                child: Center(child: Text("$i",style: TextStyle(color: Colors.white),)),
+                child: Center(
+                    child: Text(
+                  "$i",
+                  style: TextStyle(color: Colors.white),
+                )),
               ),
             );
           },
