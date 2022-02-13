@@ -4,11 +4,16 @@ import 'package:hackathontemplate/feature/bottom_nav/main/components/header_bott
 import 'package:mobx/mobx.dart';
 
 import '../../../../core/app/theme/app_theme.dart';
+import '../../../../core/locator/locator.dart';
+import '../../../home/view_model/home_view_model.dart';
+
 part 'main_view_model.g.dart';
 
 class MainViewModel = _MainViewModelBase with _$MainViewModel;
 
 abstract class _MainViewModelBase with Store {
+  final HomeViewModel _homeViewModel = locator<HomeViewModel>();
+
   @observable
   GroupButtonController mainGroupButtonController = GroupButtonController(
     selectedIndex: 0,
@@ -35,4 +40,20 @@ abstract class _MainViewModelBase with Store {
       color: Colors.green,
     ),
   ];
+
+ 
+
+  @action
+  String autoStatus() {
+    if (_homeViewModel.velocityFromSensors > 100) {
+      return "Tehlikeli";
+    } else if (_homeViewModel.velocityFromSensors > 20 &&
+        _homeViewModel.velocityFromSensors < 80) {
+      return "Normal";
+    } else if (_homeViewModel.velocityFromSensors == 00) {
+      return "Durağan";
+    } else {
+      return "Stabil";
+    }
+  }
 }
