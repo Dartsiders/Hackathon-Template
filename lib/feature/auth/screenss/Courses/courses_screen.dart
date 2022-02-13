@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../CoursesDetail/courses_detail_screen.dart';
 //import '../view_model/home_view_model.dart';
 
 //import '../../../core/locator/locator.dart';
@@ -50,7 +52,10 @@ class CourseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/course');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const CoursesDetailScreen()),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hackathontemplate/feature/auth/screenss/personel/personel_login_screen.dart';
 
 import '../../../components/rounded_button.dart';
 import '../../../constants.dart';
@@ -29,7 +30,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: "LOGIN",
+              text: "GİRİŞ YAP",
               press: () {
                 Navigator.push(
                   context,
@@ -42,7 +43,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "SIGN UP",
+              text: "KAYDOL",
               color: kPrimaryLightColor,
               textColor: Colors.black,
               press: () {
@@ -51,6 +52,21 @@ class Body extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) {
                       return SignUpScreen();
+                    },
+                  ),
+                );
+              },
+            ),
+            RoundedButton(
+              text: "Personel Girişi",
+              color: kPrimaryLightColor,
+              textColor: Colors.black,
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const PersonelLogin();
                     },
                   ),
                 );
