@@ -37,11 +37,17 @@ class _LessonScreenState extends State<LessonScreen> {
                   _coursesViewModel.lessonCarauselIndex = index,
                 },
                 enableInfiniteScroll: false,
-                height: 300.0,
+                height: 460.0,
                 autoPlay: false,
                 scrollPhysics: NeverScrollableScrollPhysics(),
               ),
-              items: [1, 2, 3, 4, 5].map((i) {
+              items: [
+                "Koruma, Bildirme, Kurtarma (KBK) olarak ifade edilir.",
+                "Koruma:\nKaza sonuçlarının ağırlaşmasını önlemek için olay yerinin değerlendirilmesini kapsar.",
+                "En önemli işlem olay yerinde oluşabilecek tehlikeleri belirleyerek güvenli bir çevre oluşturmaktır.",
+                "Bildirme:\n Olay / kaza mümkün olduğu kadar hızlı bir şekilde telefon veya diğer kişiler aracılığı ile gerekli yardım kuruluşlarına bildirilmelidir.",
+                "Kurtarma-Müdahale:\n Olay yerinde hasta / yaralılara müdahale hızlı ancak sakin bir şekilde yapılmalıdır.",
+              ].map((i) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Card(
@@ -50,14 +56,25 @@ class _LessonScreenState extends State<LessonScreen> {
                       margin: const EdgeInsets.all(15),
                       child: Column(
                         children: [
-                          Placeholder(
-                            fallbackHeight: 200,
-                            color: Colors.grey,
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff7c94b6),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/images/dokuz.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                           AppSize.lowHeightSizedBox,
-                          Text(
-                            'Eğitim Bilgisi',
-                            style: AppTheme.theme.textTheme.headline5,
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                '$i',
+                                style: AppTheme.theme.textTheme.headline5,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -66,7 +83,7 @@ class _LessonScreenState extends State<LessonScreen> {
                 );
               }).toList(),
             ),
-            AppSize.highHeightSizedBox,
+            AppSize.mediumHeightSizedBox,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

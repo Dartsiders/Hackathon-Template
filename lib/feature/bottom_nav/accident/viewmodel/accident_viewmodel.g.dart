@@ -93,9 +93,8 @@ mixin _$AccidentViewModel on _AccidentViewModelBase, Store {
   @override
   Future<void> updateEmergency(String? fire, String? peopleCount,
       String? consciousness, String? bleeding) {
-    return _$updateEmergencyAsyncAction.run(
-      () => super.updateEmergency(fire, peopleCount, consciousness, bleeding),
-    );
+    return _$updateEmergencyAsyncAction.run(() =>
+        super.updateEmergency(fire, peopleCount, consciousness, bleeding));
   }
 
   @override

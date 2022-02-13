@@ -46,7 +46,7 @@ abstract class _HomeViewModelBase with Store {
   bool isStatusEmergency = false;
 
   @action
-  listenVelocityFromSensors() {
+  Future<void> listenVelocityFromSensors() async {
     userAccelerometerEvents.listen((UserAccelerometerEvent event) {
       double newVelocity =
           sqrt(event.x * event.x + event.y * event.y + event.z * event.z);
@@ -76,7 +76,7 @@ abstract class _HomeViewModelBase with Store {
   AutoEmergencyModel? autoEmergencyModel = AutoEmergencyModel();
 
   @action
-  getCurrentPositionFromGPS() async {
+  Future<void> getCurrentPositionFromGPS() async {
     _locationService.getCurrentPosition().then((position) {
       autoEmergencyModel?.autoEmergencyLocationLatitude =
           position.latitude.toStringAsFixed(1);

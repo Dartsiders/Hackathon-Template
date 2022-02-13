@@ -133,11 +133,20 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
     });
   }
 
+  final _$listenVelocityFromSensorsAsyncAction =
+      AsyncAction('_HomeViewModelBase.listenVelocityFromSensors');
+
+  @override
+  Future<void> listenVelocityFromSensors() {
+    return _$listenVelocityFromSensorsAsyncAction
+        .run(() => super.listenVelocityFromSensors());
+  }
+
   final _$getCurrentPositionFromGPSAsyncAction =
       AsyncAction('_HomeViewModelBase.getCurrentPositionFromGPS');
 
   @override
-  Future getCurrentPositionFromGPS() {
+  Future<void> getCurrentPositionFromGPS() {
     return _$getCurrentPositionFromGPSAsyncAction
         .run(() => super.getCurrentPositionFromGPS());
   }
@@ -148,20 +157,6 @@ mixin _$HomeViewModel on _HomeViewModelBase, Store {
   @override
   Future<void> saveAutoEmergency() {
     return _$saveAutoEmergencyAsyncAction.run(() => super.saveAutoEmergency());
-  }
-
-  final _$_HomeViewModelBaseActionController =
-      ActionController(name: '_HomeViewModelBase');
-
-  @override
-  dynamic listenVelocityFromSensors() {
-    final _$actionInfo = _$_HomeViewModelBaseActionController.startAction(
-        name: '_HomeViewModelBase.listenVelocityFromSensors');
-    try {
-      return super.listenVelocityFromSensors();
-    } finally {
-      _$_HomeViewModelBaseActionController.endAction(_$actionInfo);
-    }
   }
 
   @override
