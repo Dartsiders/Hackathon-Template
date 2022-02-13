@@ -13,18 +13,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _surNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   SingingCharacter? _character = SingingCharacter.O;
-
-  @override
-  void initState() {
-    _nameController.text = "Ahmet";
-    _surNameController.text = "Karabudak";
-    _emailController.text = "ahmet.karabudakk.9122@gmail.com";
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +29,12 @@ class _AccountState extends State<Account> {
             .doc(FirebaseAuth.instance.currentUser!.email)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
+          final output = snapshot.data;
+          if (snapshot.data == null) {
+            return const CircularProgressIndicator();
+          } else if (!snapshot.hasData) {
+            return const CircularProgressIndicator();
+          }
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -92,7 +87,6 @@ class _AccountState extends State<Account> {
                         .copyWith(splashColor: Colors.transparent),
                     child: TextField(
                       enabled: false,
-                      controller: _nameController,
                       style: const TextStyle(
                         fontSize: 15.0,
                         color: Color(0xFFbdc6cf),
@@ -101,7 +95,7 @@ class _AccountState extends State<Account> {
                         prefixIcon: const Icon(Icons.person_outline),
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: 'İsim',
+                        hintText: output['name'].toString(),
                         contentPadding: const EdgeInsets.only(
                           left: 14.0,
                           bottom: 12.0,
@@ -132,47 +126,6 @@ class _AccountState extends State<Account> {
                         .copyWith(splashColor: Colors.transparent),
                     child: TextField(
                       enabled: false,
-                      controller: _surNameController,
-                      style: const TextStyle(
-                        fontSize: 15.0,
-                        color: Color(0xFFbdc6cf),
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.person_outline),
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Soyisim',
-                        contentPadding: const EdgeInsets.only(
-                          left: 14.0,
-                          bottom: 12.0,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(25.7),
-                        ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.circular(25.7),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    color: Colors.white,
-                  ),
-                  width: 500.w,
-                  height: 50.h,
-                  margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(splashColor: Colors.transparent),
-                    child: TextField(
-                      enabled: false,
-                      controller: _emailController,
                       style: const TextStyle(
                         fontSize: 15.0,
                         color: Color(0xFFbdc6cf),
@@ -181,7 +134,7 @@ class _AccountState extends State<Account> {
                         prefixIcon: const Icon(Icons.mail_outline),
                         filled: true,
                         fillColor: Colors.white,
-                        hintText: 'Mail',
+                        hintText: output['email'].toString(),
                         contentPadding: const EdgeInsets.only(
                           left: 14.0,
                           bottom: 12.0,
@@ -282,6 +235,13 @@ class _AccountState extends State<Account> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(height: 30),
+                FloatingActionButton.extended(
+                  onPressed: () {},
+                  backgroundColor: Colors.orangeAccent,
+                  icon: const Icon(Icons.edit),
+                  label: const Text("Düzenle"),
                 ),
               ],
             ),

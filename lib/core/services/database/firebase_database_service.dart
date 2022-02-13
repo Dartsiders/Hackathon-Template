@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hackathontemplate/core/models/emergency/emergency_model.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
+import 'package:hackathontemplate/feature/bottom_nav/accident/viewmodel/accident_viewmodel.dart';
 
 import '../../models/user_model/user_model.dart';
 
@@ -9,6 +10,7 @@ import 'database_service.dart';
 
 class FirebaseDatabaseService implements DatabaseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final AccidentViewModel _accidentViewModel = AccidentViewModel();
 
   @override
   Future<UserModel> userReadDatabase(String? userId) async {
@@ -46,7 +48,7 @@ class FirebaseDatabaseService implements DatabaseService {
       }
     });
   }
-  
+
   Future<bool> checkSameLocation(EmergencyModel emergencyModel) async {
     final resultLatitude = await FirebaseFirestore.instance
         .collection("emergency")
@@ -65,11 +67,10 @@ class FirebaseDatabaseService implements DatabaseService {
     return resultLatitude.docs.isEmpty && resultLongitude.docs.isEmpty;
   }
 
-
   @override
   Future<void> saveEmergencyContact(
       UserModel userModel, EmergencyContactModel emergencyContactModel) async {
-    var documentRef = await _firebaseFirestore
+    final documentRef = _firebaseFirestore
         .collection("users")
         .doc(userModel.userId)
         .collection("emergencycontacts")
@@ -81,31 +82,33 @@ class FirebaseDatabaseService implements DatabaseService {
   @override
   Future<List<EmergencyContactModel>> getEmergencyContact(
       UserModel userModel) async {
-    var contactList = await _firebaseFirestore
+    final contactList = await _firebaseFirestore
         .collection("users")
         .doc(userModel.userId)
         .collection("emergencycontacts")
         .get()
-        .then((value) => value.docs.map((doc) {
-              return EmergencyContactModel.fromJson(doc.data());
-            }).toList());
+        .then(
+          (value) => value.docs.map((doc) {
+            return EmergencyContactModel.fromJson(doc.data());
+          }).toList(),
+        );
     return contactList;
   }
 
   @override
   Future<void> addEmergency(EmergencyModel emergencyModel) async {
-
     final bool valid = await checkSameLocation(emergencyModel);
     if (!valid) {
       Fluttertoast.showToast(
         msg: "Acil Durum Çoktan Belirtildi Dikkatiniz İçin Teşekkürler",
       );
     } else {
-      final document = _firebaseFirestore.collection("emergency").doc();
+      final document = _firebaseFirestore.collection("emergency").doc(
+          _accidentViewModel.currentLocation!.latitude.toString() +
+              _accidentViewModel.currentLocation!.longitude.toString());
       emergencyModel.emergencyId = document.id;
       emergencyModel.emergencyTime = Timestamp.now().toDate();
       document.set(emergencyModel.toJson());
     }
-
   }
 }

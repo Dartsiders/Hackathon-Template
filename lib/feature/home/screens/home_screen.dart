@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
     return [
       MainScreen(),
       CoursesScreen(),
-      const AccidentScreen(),
+      const ReportEmergency(),
       ContactsScreen(),
       const SettingsScreen()
     ];
