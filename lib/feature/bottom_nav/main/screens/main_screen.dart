@@ -8,6 +8,7 @@ import 'package:group_button/group_button.dart';
 import 'package:hackathontemplate/core/app/duration/app_duration.dart';
 import 'package:hackathontemplate/core/app/size/app_size.dart';
 import 'package:hackathontemplate/core/app/theme/app_theme.dart';
+import 'package:hackathontemplate/feature/bottom_nav/contacts/screens/contacts_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/contacts/view_model/contacts_view_model.dart';
 import 'package:hackathontemplate/feature/bottom_nav/courses/screens/lesson_screen.dart';
 import 'package:hackathontemplate/feature/bottom_nav/courses/screens/quiz1_screen.dart';
