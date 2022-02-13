@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hackathontemplate/core/models/emergency_contact/emergency_contact_model.dart';
 
+import '../../models/auto_emergency/auto_emergency_model.dart';
 import '../../models/user_model/user_model.dart';
 
 import 'database_service.dart';
@@ -72,5 +73,35 @@ class FirebaseDatabaseService implements DatabaseService {
           }).toList(),
         );
     return contactList;
+  }
+
+  @override
+  Future<void> saveAutoEmergency(
+      UserModel userModel, AutoEmergencyModel autoEmergencyModel) async {
+    var documentRef =
+        await _firebaseFirestore.collection("autoemergency").doc();
+    autoEmergencyModel.autoEmergencyId = documentRef.id;
+    autoEmergencyModel.autoEmergencyTime = Timestamp.now().toDate();
+    documentRef.set(autoEmergencyModel.toJson());
+
+    var documentRef1 = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("autoemergency")
+        .doc(autoEmergencyModel.autoEmergencyId);
+    documentRef.set(autoEmergencyModel.toJson());
+  }
+
+  @override
+  Future<List<AutoEmergencyModel>> getUserEmergency(UserModel userModel) async {
+    var autoEmergencyList = await _firebaseFirestore
+        .collection("users")
+        .doc(userModel.userId)
+        .collection("autoemergency")
+        .get()
+        .then((value) => value.docs.map((doc) {
+              return AutoEmergencyModel.fromJson(doc.data());
+            }).toList());
+    return autoEmergencyList;
   }
 }

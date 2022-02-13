@@ -16,7 +16,7 @@ import '../../../../core/locator/locator.dart';
 import '../../../home/view_model/home_view_model.dart';
 import '../../contacts/components/add_contact_sheet_widget.dart';
 
-class CoursesScreen extends StatelessWidget {
+class Courses1Screen extends StatelessWidget {
   final HomeViewModel _homeViewModel = locator<HomeViewModel>();
   final ContactsViewModel _contactsViewModel = locator<ContactsViewModel>();
 

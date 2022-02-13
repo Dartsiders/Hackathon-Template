@@ -13,6 +13,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import '../../../core/locator/locator.dart';
 import '../../auth/screenss/Courses/courses_screen.dart';
+import '../../bottom_nav/courses/screens/courses_screen.dart';
 import '../view_model/home_view_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -99,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _buildScreens() {
     return [
       MainScreen(),
-      const CoursesScreen(),
+      Courses1Screen(),
       const ReportEmergency(),
       ContactsScreen(),
       const SettingsScreen()
